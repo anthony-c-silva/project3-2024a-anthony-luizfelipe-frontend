@@ -1,0 +1,31 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Diretórios de build
+dist/
+build/
+
+# Dependências locais do pacote
+*.tgz
+
+# Arquivos de cache
+.cache/
+
+# Sistema de arquivos do editor
+.vscode/
+.idea/
+
+# Arquivos de sistema do macOS
+.DS_Store
+
+# Ambiente
+.env
+
+# Arquivos temporários
+tmp/
+temp/
