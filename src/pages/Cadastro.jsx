@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Cadastro.css';
+import { useNavigate } from 'react-router-dom';
 
 function Cadastro() {
   const [nome, setNome] = useState('');
@@ -7,6 +8,7 @@ function Cadastro() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [tipo, setTipo] = useState('');
+  const  navigate = useNavigate();
   
 
   const handleCadastro = () => {
@@ -15,6 +17,7 @@ function Cadastro() {
     console.log('Username:', username);
     console.log('Password:', password);
     console.log('Tipo:', tipo);
+    navigate('/dashboard-usuario');
   };
 
   const handleChangeTipo = (event) => {

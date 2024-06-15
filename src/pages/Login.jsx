@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     console.log('Username:', username);
     console.log('Password:', password);
+    navigate('/dashboard-usuario');
   };
 
   return (
