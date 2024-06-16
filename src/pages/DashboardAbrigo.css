@@ -1,0 +1,213 @@
+/* Container principal do dashboard */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #2E2D4E;
+    width: 800px;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal */
+h2 {
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Botões */
+button {
+    margin: 0 10px;
+    padding: 5px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 2px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #4CAF50; /* Verde padrão */
+    color: #ffffff;
+}
+
+button:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+.signup-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.signup-button:hover {
+    background-color: #218838;
+}
+
+/* Inputs */
+input {
+    border-radius: 10px;
+    height: 40px;
+    width: 80%;
+    padding: 0 10px;
+    border: 2px solid #cccccc;
+    font-size: 18px;
+    background-color: #ffffff;
+    color: black;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Select */
+select {
+    align-items: left;
+    border-radius: 10px;
+    height: 40px;
+    width: 100%;
+    padding: 0 10px;
+    border: 2px solid #cccccc;
+    font-size: 18px;
+    background-color: #ffffff;
+    color: black;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease;
+}
+
+select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Tabela de itens */
+.abrigos-table,
+.itens-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #e4dddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.abrigos-table thead tr,
+.itens-table thead tr {
+    background-color: #4CAF50;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+    border-right: 1px solid #9c9c9c; /* Linha divisória entre colunas */
+}
+
+.abrigos-table th,
+.itens-table th,
+.abrigos-table td{
+    color: rgb(255, 255, 255);
+    padding: 12px 15px;
+    border-bottom: 1px solid #dddddd;
+    border-right: 1px solid #9c9c9c; /* Linha divisória entre colunas */
+}
+
+.itens-table td {
+    color: rgb(0, 0, 0);
+    padding: 1px 5px;
+    border-bottom: 1px solid #9c9c9c;
+    border-right: 1px solid #9c9c9c; /* Linha divisória entre colunas */
+}
+
+
+.abrigos-table tbody tr:nth-of-type(even),
+.itens-table tbody tr:nth-of-type(even) {
+    background-color: #b8b4b4;
+}
+
+.abrigos-table tbody tr:hover,
+.itens-table tbody tr:hover {
+    color: #ffffff;
+    background-color: #6a66ce;
+}
+
+.abrigos-table td:last-child,
+.itens-table td:last-child,
+.abrigos-table th:last-child,
+.itens-table th:last-child {
+    border-right: none; /* Remove a borda direita do último elemento */
+}
+
+/* Modal */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #2E2D4E;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+form input,
+form select {
+    align-self: left;
+    width: 50%;
+}
+
+form button {
+    align-self: center;
+    max-width: 20%;
+    margin: 20px;
+    padding: 15px 20px;
+}
+
+/* Mensagens */
+p {
+    color: #ffffff;
+    font-weight: bold;
+    margin: 5px 0;
+}

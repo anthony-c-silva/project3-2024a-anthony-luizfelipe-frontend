@@ -1,22 +1,31 @@
-import React, {useState, useEffect, useRef} from 'react'
-import './DashboardUsuario.css'
-import api from '../services/api.js'
+import React, { useState, useEffect, useRef } from 'react';
+import './DashboardUsuario.css';
+import api from '../services/api.js';
+import { useNavigate } from 'react-router-dom';
 
 function DashboardUsuario() {
-    const [abrigos, setAbrigos] = useState([])
+    const [abrigos, setAbrigos] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [novoAbrigo, setNovoAbrigo] = useState({
         nome: '',
         localizacao: ''
     });
-
+    
+    const navigate = useNavigate();
     const inputNome = useRef();
     const inputLocalizacao = useRef();
 
-    // Função assíncrona para mostrar abrigos
+
+    const handleVisualizar = (id) => {
+        navigate(`/dashboard-abrigo/${id}`);
+    };
+
+    // Função assíncrona para mostrar abrigos com opção de filtro
     async function getAbrigos() {
         try {
-            const response = await api.get('/api/abrigos');
+            let url = '/api/abrigos';
+           
+            const response = await api.get(url);
             setAbrigos(response.data);
         } catch (error) {
             console.error('Erro ao buscar abrigos:', error);
@@ -61,7 +70,6 @@ function DashboardUsuario() {
         }
     }
 
-
     // Função assíncrona para buscar um abrigo pelo ID
     async function getAbrigoById(id) {
         try {
@@ -99,11 +107,10 @@ function DashboardUsuario() {
             await createAbrigo();
         }
     }
-    
 
     useEffect(() => {
-        getAbrigos()
-      }, [])  
+        getAbrigos();
+    }, []);
 
     return (
         <>
@@ -128,6 +135,7 @@ function DashboardUsuario() {
                                 <td>
                                     <button onClick={() => openModal(abrigo)}>Editar</button>
                                     <button onClick={() => deleteAbrigo(abrigo.id)}>Deletar</button>
+                                    <button onClick={() => handleVisualizar(abrigo.id)}>Visualizar</button>
                                 </td>
                             </tr>
                         ))}
@@ -167,6 +175,5 @@ function DashboardUsuario() {
         </>
     );
 }
-
 
 export default DashboardUsuario;
