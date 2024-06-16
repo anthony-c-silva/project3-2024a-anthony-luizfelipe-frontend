@@ -192,6 +192,17 @@ label {
     margin-bottom: 5px;
 }
 
+.icon-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+img {
+    width: 20px;
+    height: 20px;
+}
+
 form input,
 form select {
     align-self: left;

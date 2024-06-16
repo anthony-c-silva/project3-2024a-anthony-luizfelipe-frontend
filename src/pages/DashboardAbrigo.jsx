@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import api from '../services/api.js';
-import './DashboardAbrigo.css'
+import { useParams } from 'react-router-dom';
+import Edit from '../assets/edit.svg';
+import Trash from '../assets/trash.svg';
+import api from '../services/api';
+import './DashboardAbrigo.css';
 
 function DashboardAbrigo() {
     const { id } = useParams();
@@ -13,8 +15,9 @@ function DashboardAbrigo() {
         abrigoId: id
     });
     const [showModal, setShowModal] = useState(false);
-
-
+    const [showSearchModal, setShowSearchModal] = useState(false);
+    const [searchCriteria, setSearchCriteria] = useState('id');
+    const [searchValue, setSearchValue] = useState('');
 
     // Função assíncrona para buscar itens vinculados ao abrigo
     async function getItens() {
@@ -87,6 +90,24 @@ function DashboardAbrigo() {
         }
     }
 
+    // Função para lidar com a submissão do formulário de pesquisa
+    async function handleSearch(event) {
+        event.preventDefault();
+        try {
+            const response = await api.get('/api/itens', {
+                params: {
+                    [searchCriteria]: searchValue,
+                    abrigoId: id
+                }
+            });
+            setItens(response.data); // Atualiza os itens com o resultado da pesquisa
+            setShowSearchModal(false); // Fecha o modal após a pesquisa
+        } catch (error) {
+            console.error('Erro ao buscar itens:', error);
+        }
+    }
+
+    // Efeito para carregar os itens ao montar o componente ou ao mudar o ID do abrigo
     useEffect(() => {
         getItens();
     }, [id]);
@@ -94,7 +115,10 @@ function DashboardAbrigo() {
     return (
         <div className="dashboard-container">
             <h2>Itens do Abrigo</h2>
-            <button onClick={() => openModal()}>Adicionar Item</button>
+            <div className="button-container">
+                <button onClick={() => openModal()}>Adicionar Item</button>
+                <button onClick={() => setShowSearchModal(true)}>Pesquisar</button>
+            </div>
             <table className="itens-table">
                 <thead>
                     <tr>
@@ -113,14 +137,24 @@ function DashboardAbrigo() {
                             <td>{item.quantidade}</td>
                             <td>{item.categoria}</td>
                             <td>
-                                <button onClick={() => openModal(item)}>Editar</button>
-                                <button onClick={() => deleteItem(item.id)}>Deletar</button>
+                                <button className='icon-button' onClick={() => openModal(item)}>
+                                    <img src={Edit}/>
+                                </button>
+                                <button className='icon-button' onClick={() => deleteItem(item.id)}>
+                                <img src={Trash}/>
+                                </button>
                             </td>
                         </tr>
                     ))}
+                    {itens.length === 0 && (
+                        <tr>
+                            <td colSpan="5" style={{ textAlign: 'center' }}>Nenhum item encontrado.</td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
 
+            {/* Modal para adicionar/editar item */}
             {showModal && (
                 <div className="modal">
                     <div className="modal-content">
@@ -155,6 +189,37 @@ function DashboardAbrigo() {
                                 />
                             </label>
                             <button type="submit">Salvar</button>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal para pesquisa */}
+            {showSearchModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={() => setShowSearchModal(false)}>&times;</span>
+                        <h3>Pesquisar Itens</h3>
+                        <form onSubmit={handleSearch}>
+                            <label>
+                                Critério de Busca:
+                                <select name="criteria" value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
+                                    <option value="id">ID</option>
+                                    <option value="nome">Nome</option>
+                                    <option value="quantidade">Quantidade</option>
+                                    <option value="categoria">Categoria</option>
+                                </select>
+                            </label>
+                            <label>
+                                Valor:
+                                <input
+                                    type="text"
+                                    name="searchValue"
+                                    value={searchValue}
+                                    onChange={(e) => setSearchValue(e.target.value)}
+                                />
+                            </label>
+                            <button type="submit">Pesquisar</button>
                         </form>
                     </div>
                 </div>

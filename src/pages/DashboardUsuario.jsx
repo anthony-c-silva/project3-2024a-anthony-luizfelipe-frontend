@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './DashboardUsuario.css';
+import './DashboardAbrigo.css';
 import api from '../services/api.js';
 import { useNavigate } from 'react-router-dom';
+import Edit from '../assets/edit.svg';
+import Trash from '../assets/trash.svg';
+import View from '../assets/view.svg';
 
 function DashboardUsuario() {
     const [abrigos, setAbrigos] = useState([]);
@@ -117,7 +120,7 @@ function DashboardUsuario() {
             <div className="dashboard-container">
                 <h2>Lista de Abrigos</h2>
                 <button onClick={() => openModal()}>Adicionar Abrigo</button>
-                <table className="abrigos-table">
+                <table className="itens-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -133,9 +136,16 @@ function DashboardUsuario() {
                                 <td>{abrigo.nome}</td>
                                 <td>{abrigo.localizacao}</td>
                                 <td>
-                                    <button onClick={() => openModal(abrigo)}>Editar</button>
-                                    <button onClick={() => deleteAbrigo(abrigo.id)}>Deletar</button>
-                                    <button onClick={() => handleVisualizar(abrigo.id)}>Visualizar</button>
+                                    <button className='icon-button' onClick={() => openModal(abrigo)}>
+                                        <img src={Edit}/>
+                                    </button>
+                                    <button className='icon-button' onClick={() => deleteAbrigo(abrigo.id)}>
+                                        <img src={Trash}/>
+                                    </button>
+                                    
+                                    <button className='icon-button' onClick={() => handleVisualizar(abrigo.id)}>
+                                        <img src={View}/>
+                                    </button>
                                 </td>
                             </tr>
                         ))}

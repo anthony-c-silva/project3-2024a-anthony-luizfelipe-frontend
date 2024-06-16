@@ -85,6 +85,16 @@
       font-weight: bold;
     }
   
+    .icon-button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  
+    img {
+      width: 20px;
+      height: 20px;
+    }
     button {
       background-color: transparent;
       border: none;
