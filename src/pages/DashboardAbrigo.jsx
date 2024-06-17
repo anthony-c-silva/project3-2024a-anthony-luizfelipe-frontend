@@ -94,13 +94,24 @@ function DashboardAbrigo() {
     async function handleSearch(event) {
         event.preventDefault();
         try {
-            const response = await api.get('/api/itens', {
-                params: {
-                    [searchCriteria]: searchValue,
-                    abrigoId: id
+            const response = await api.get('/api/itens');
+            const itensFiltrados = response.data.filter(item => {
+                if (item.abrigoId !== parseInt(id)) {
+                    return false; // Filtra itens que não pertencem ao abrigo atual
                 }
+                if (searchCriteria === 'id') {
+                    return item.id === parseInt(searchValue);
+                } else if (searchCriteria === 'nome') {
+                    return item.nome.toLowerCase().includes(searchValue.toLowerCase());
+                } else if (searchCriteria === 'quantidade') {
+                    return item.quantidade === parseInt(searchValue);
+                } else if (searchCriteria === 'categoria') {
+                    return item.categoria.toLowerCase().includes(searchValue.toLowerCase());
+                }
+                return false;
             });
-            setItens(response.data); // Atualiza os itens com o resultado da pesquisa
+            console.log('Itens encontrados:', itensFiltrados);
+            setItens(itensFiltrados); // Atualiza os itens com o resultado da pesquisa
             setShowSearchModal(false); // Fecha o modal após a pesquisa
         } catch (error) {
             console.error('Erro ao buscar itens:', error);
@@ -118,6 +129,7 @@ function DashboardAbrigo() {
             <div className="button-container">
                 <button onClick={() => openModal()}>Adicionar Item</button>
                 <button onClick={() => setShowSearchModal(true)}>Pesquisar</button>
+                <button onClick={() => getItens()}>Mostrar Tudo</button>
             </div>
             <table className="itens-table">
                 <thead>
