@@ -9,15 +9,15 @@ import View from '../assets/view.svg';
 function DashboardUsuario() {
     const [abrigos, setAbrigos] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [showSearchModal, setShowSearchModal] = useState(false);
     const [novoAbrigo, setNovoAbrigo] = useState({
         nome: '',
         localizacao: ''
     });
-    
-    const navigate = useNavigate();
-    const inputNome = useRef();
-    const inputLocalizacao = useRef();
+    const [searchCriteria, setSearchCriteria] = useState('id');
+    const [searchValue, setSearchValue] = useState('');
 
+    const navigate = useNavigate();
 
     const handleVisualizar = (id) => {
         navigate(`/dashboard-abrigo/${id}`);
@@ -26,9 +26,7 @@ function DashboardUsuario() {
     // Função assíncrona para mostrar abrigos com opção de filtro
     async function getAbrigos() {
         try {
-            let url = '/api/abrigos';
-           
-            const response = await api.get(url);
+            const response = await api.get('/api/abrigos');
             setAbrigos(response.data);
         } catch (error) {
             console.error('Erro ao buscar abrigos:', error);
@@ -73,16 +71,6 @@ function DashboardUsuario() {
         }
     }
 
-    // Função assíncrona para buscar um abrigo pelo ID
-    async function getAbrigoById(id) {
-        try {
-            const response = await api.get(`/api/abrigos/${id}`);
-            return response.data;
-        } catch (error) {
-            console.error(`Erro ao buscar abrigo com ID ${id}:`, error);
-        }
-    }
-
     // Função para abrir o modal de adição/edição de abrigo
     function openModal(abrigo = { id: null, nome: '', localizacao: '' }) {
         setNovoAbrigo(abrigo);
@@ -111,6 +99,29 @@ function DashboardUsuario() {
         }
     }
 
+    // Função para lidar com a submissão do formulário de pesquisa
+    async function handleSearch(event) {
+        event.preventDefault();
+        try {
+            const response = await api.get('/api/abrigos');
+            const abrigosFiltrados = response.data.filter(abrigo => {
+                if (searchCriteria === 'id') {
+                    return abrigo.id === parseInt(searchValue);
+                } else if (searchCriteria === 'nome') {
+                    return abrigo.nome.toLowerCase().includes(searchValue.toLowerCase());
+                } else if (searchCriteria === 'localizacao') {
+                    return abrigo.localizacao.toLowerCase().includes(searchValue.toLowerCase());
+                }
+                return false;
+            });
+            console.log('Abrigos encontrados:', abrigosFiltrados);
+            setAbrigos(abrigosFiltrados); // Atualiza os abrigos com o resultado da pesquisa
+            setShowSearchModal(false); // Fecha o modal após a pesquisa
+        } catch (error) {
+            console.error('Erro ao buscar abrigos:', error);
+        }
+    }
+
     useEffect(() => {
         getAbrigos();
     }, []);
@@ -119,7 +130,11 @@ function DashboardUsuario() {
         <>
             <div className="dashboard-container">
                 <h2>Lista de Abrigos</h2>
-                <button onClick={() => openModal()}>Adicionar Abrigo</button>
+                <div className="button-container">
+                    <button onClick={() => openModal()}>Adicionar Abrigo</button>
+                    <button onClick={() => setShowSearchModal(true)}>Pesquisar</button>
+                    <button onClick={() => getAbrigos()}>Mostrar Tudo</button>
+                </div>
                 <table className="itens-table">
                     <thead>
                         <tr>
@@ -142,7 +157,6 @@ function DashboardUsuario() {
                                     <button className='icon-button' onClick={() => deleteAbrigo(abrigo.id)}>
                                         <img src={Trash}/>
                                     </button>
-                                    
                                     <button className='icon-button' onClick={() => handleVisualizar(abrigo.id)}>
                                         <img src={View}/>
                                     </button>
@@ -177,6 +191,35 @@ function DashboardUsuario() {
                                     />
                                 </label>
                                 <button type="submit">Salvar</button>
+                            </form>
+                        </div>
+                    </div>
+                )}
+
+                {showSearchModal && (
+                    <div className="modal">
+                        <div className="modal-content">
+                            <span className="close" onClick={() => setShowSearchModal(false)}>&times;</span>
+                            <h3>Pesquisar Abrigos</h3>
+                            <form onSubmit={handleSearch}>
+                                <label>
+                                    Critério de Busca:
+                                    <select name="criteria" value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
+                                        <option value="id">ID</option>
+                                        <option value="nome">Nome</option>
+                                        <option value="localizacao">Localização</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    Valor:
+                                    <input
+                                        type="text"
+                                        name="searchValue"
+                                        value={searchValue}
+                                        onChange={(e) => setSearchValue(e.target.value)}
+                                    />
+                                </label>
+                                <button type="submit">Pesquisar</button>
                             </form>
                         </div>
                     </div>
