@@ -67,6 +67,10 @@ input:focus {
     outline: none;
 }
 
+input:required {
+    border: 1px dashed red;
+  }
+
 /* Select */
 select {
     align-items: left;
