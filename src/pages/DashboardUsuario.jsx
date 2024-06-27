@@ -31,7 +31,7 @@ function DashboardUsuario() {
     async function getAbrigos() {
         try {
             const response = await api.get('/abrigos');
-            setAbrigos(response.data);
+            setAbrigos(response.data.abrigos);
         } catch (error) {
             console.error('Erro ao buscar abrigos:', error);
         }
@@ -125,7 +125,7 @@ function DashboardUsuario() {
         event.preventDefault();
         try {
             const response = await api.get('/abrigos');
-            const abrigosFiltrados = response.data.filter(abrigo => {
+            const abrigosFiltrados = response.data.abrigos.filter(abrigo => { //ajuste aqui 
                 if (searchCriteria === 'id') {
                     return abrigo.id === parseInt(searchValue);
                 } else if (searchCriteria === 'nome') {
