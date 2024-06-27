@@ -13,7 +13,7 @@ function DashboardUsuario() {
     const [novoAbrigo, setNovoAbrigo] = useState({
         id: null,
         nome: '',
-        localizacao: ''
+        endereco: ''
     });
     const [searchCriteria, setSearchCriteria] = useState('id');
     const [searchValue, setSearchValue] = useState('');
@@ -30,7 +30,7 @@ function DashboardUsuario() {
     // Função assíncrona para mostrar abrigos com opção de filtro
     async function getAbrigos() {
         try {
-            const response = await api.get('/api/abrigos');
+            const response = await api.get('/abrigos');
             setAbrigos(response.data);
         } catch (error) {
             console.error('Erro ao buscar abrigos:', error);
@@ -53,10 +53,10 @@ function DashboardUsuario() {
                 setShowDuplicateModal(true); // Abre o modal de confirmação de edição
                 return; // Interrompe o fluxo aqui para não continuar com a criação
             }
-
-            await api.post('/api/abrigos', {
+            console.log('Pre post')
+            await api.post('/abrigos', {
                 nome: novoAbrigo.nome,
-                localizacao: novoAbrigo.localizacao,
+                endereco: novoAbrigo.endereco,
             });
             await getAbrigos(); // Atualiza a lista de abrigos após a criação
             closeModal();
@@ -68,9 +68,9 @@ function DashboardUsuario() {
     // Função assíncrona para atualizar um abrigo
     async function updateAbrigo() {
         try {
-            await api.put(`/api/abrigos/${novoAbrigo.id}`, {
+            await api.put(`/abrigos/${novoAbrigo.id}`, {
                 nome: novoAbrigo.nome,
-                localizacao: novoAbrigo.localizacao,
+                endereco: novoAbrigo.endereco,
             });
             await getAbrigos(); // Atualiza a lista de abrigos após a atualização
             closeModal();
@@ -82,7 +82,7 @@ function DashboardUsuario() {
     // Função assíncrona para deletar um abrigo
     async function deleteAbrigo(id) {
         try {
-            await api.delete(`/api/abrigos/${id}`);
+            await api.delete(`/abrigos/${id}`);
             await getAbrigos(); // Atualiza a lista de abrigos após a exclusão
         } catch (error) {
             console.error(`Erro ao deletar abrigo com ID ${id}:`, error);
@@ -90,7 +90,7 @@ function DashboardUsuario() {
     }
 
     // Função para abrir o modal de adição/edição de abrigo
-    function openModal(abrigo = { id: null, nome: '', localizacao: '' }) {
+    function openModal(abrigo = { id: null, nome: '', endereco: '' }) {
         setNovoAbrigo(abrigo);
         setShowModal(true);
         setDuplicateAbrigo(null); // Limpa o estado do abrigo duplicado ao abrir o modal
@@ -100,7 +100,7 @@ function DashboardUsuario() {
     // Função para fechar o modal
     function closeModal() {
         setShowModal(false);
-        setNovoAbrigo({ id: null, nome: '', localizacao: '' });
+        setNovoAbrigo({ id: null, nome: '', endereco: '' });
         setErrors({}); // Limpa os erros ao fechar o modal
     }
 
@@ -124,14 +124,14 @@ function DashboardUsuario() {
     async function handleSearch(event) {
         event.preventDefault();
         try {
-            const response = await api.get('/api/abrigos');
+            const response = await api.get('/abrigos');
             const abrigosFiltrados = response.data.filter(abrigo => {
                 if (searchCriteria === 'id') {
                     return abrigo.id === parseInt(searchValue);
                 } else if (searchCriteria === 'nome') {
                     return abrigo.nome.toLowerCase().includes(searchValue.toLowerCase());
-                } else if (searchCriteria === 'localizacao') {
-                    return abrigo.localizacao.toLowerCase().includes(searchValue.toLowerCase());
+                } else if (searchCriteria === 'endereco') {
+                    return abrigo.endereco.toLowerCase().includes(searchValue.toLowerCase());
                 }
                 return false;
             });
@@ -147,7 +147,7 @@ function DashboardUsuario() {
     function validateForm() {
         let formErrors = {};
         if (!novoAbrigo.nome) formErrors.nome = "Nome é obrigatório";
-        if (!novoAbrigo.localizacao) formErrors.localizacao = "Localização é obrigatória";
+        if (!novoAbrigo.endereco) formErrors.endereco = "Localização é obrigatória";
         setErrors(formErrors);
         return Object.keys(formErrors).length === 0;
     }
@@ -227,7 +227,7 @@ function DashboardUsuario() {
                             <tr key={abrigo.id}>
                                 <td>{abrigo.id}</td>
                                 <td>{abrigo.nome}</td>
-                                <td>{abrigo.localizacao}</td>
+                                <td>{abrigo.endereco}</td>
                                 <td>
                                     <button className='icon-button' onClick={() => openModal(abrigo)}>
                                         <img src={Edit} alt="Editar" />
@@ -264,11 +264,11 @@ function DashboardUsuario() {
                                     Localização:
                                     <input
                                         type="text"
-                                        name="localizacao"
-                                        value={novoAbrigo.localizacao}
+                                        name="endereco"
+                                        value={novoAbrigo.endereco}
                                         onChange={handleChange}
                                     />
-                                    {errors.localizacao && <span className="error">{errors.localizacao}</span>}
+                                    {errors.endereco && <span className="error">{errors.endereco}</span>}
                                 </label>
                                 <button type="submit">Salvar</button>
                             </form>
@@ -287,7 +287,7 @@ function DashboardUsuario() {
                                     <select name="criteria" value={searchCriteria} onChange={(e) => setSearchCriteria(e.target.value)}>
                                         <option value="id">ID</option>
                                         <option value="nome">Nome</option>
-                                        <option value="localizacao">Localização</option>
+                                        <option value="endereco">Localização</option>
                                     </select>
                                 </label>
                                 <label>
