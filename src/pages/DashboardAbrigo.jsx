@@ -9,15 +9,34 @@ function DashboardAbrigo() {
     const { id } = useParams();
     const [itens, setItens] = useState([]);
     const [novoItem, setNovoItem] = useState({
+        id: null,
         nome: '',
         quantidade: '',
-        categoria: '',
+        categoria: '', // Inicialmente vazio
         abrigoId: id
     });
     const [showModal, setShowModal] = useState(false);
     const [showSearchModal, setShowSearchModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false); // Estado para controlar o modal de confirmação de exclusão
+    const [deleteItem, setDeleteItem] = useState(null); // Estado para armazenar temporariamente o item a ser excluído
     const [searchCriteria, setSearchCriteria] = useState('id');
     const [searchValue, setSearchValue] = useState('');
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [duplicateItem, setDuplicateItem] = useState(null); // Estado para armazenar o item duplicado encontrado
+
+    // Array de opções de categoria
+    const categorias = [
+        { value: 'alimentos', label: 'Alimentos' },
+        { value: 'bebidas', label: 'Bebidas' },
+        { value: 'brinquedos', label: 'Brinquedos' },
+        { value: 'cosmeticos', label: 'Cosméticos' },
+        { value: 'eletronicos', label: 'Eletrônicos' },
+        { value: 'ferramentas', label: 'Ferramentas' },
+        { value: 'higiene', label: 'Higiene' },
+        { value: 'moveis', label: 'Móveis' },
+        { value: 'roupas', label: 'Roupas' }
+    ];
 
     // Função assíncrona para buscar itens vinculados ao abrigo
     async function getItens() {
@@ -33,6 +52,15 @@ function DashboardAbrigo() {
     // Função assíncrona para criar um item
     async function createItem() {
         try {
+            // Verifica se já existe um item com o mesmo nome
+            const itemExistente = itens.find(item => item.nome.toLowerCase() === novoItem.nome.toLowerCase());
+            if (itemExistente) {
+                setDuplicateItem(itemExistente); // Armazena o item duplicado encontrado
+                setShowModal(false); // Fecha o modal de adição/edição
+                setShowEditModal(true); // Abre o modal de confirmação de edição
+                return; // Interrompe o fluxo aqui para não continuar com a criação
+            }
+
             await api.post('/api/itens', novoItem);
             getItens();
             closeModal();
@@ -53,10 +81,11 @@ function DashboardAbrigo() {
     }
 
     // Função assíncrona para deletar um item
-    async function deleteItem(id) {
+    async function deleteItemConfirmed(id) {
         try {
             await api.delete(`/api/itens/${id}`);
             getItens();
+            setShowDeleteModal(false); // Fecha o modal após a exclusão
         } catch (error) {
             console.error(`Erro ao deletar item com ID ${id}:`, error);
         }
@@ -64,14 +93,24 @@ function DashboardAbrigo() {
 
     // Função para abrir o modal de adição/edição de item
     function openModal(item = { id: null, nome: '', quantidade: '', categoria: '', abrigoId: id }) {
-        setNovoItem(item);
+        // Definindo o item atualizado no estado do novoItem
+        setNovoItem({ ...item, abrigoId: id });
         setShowModal(true);
+        setDuplicateItem(null); // Limpa o estado do item duplicado ao abrir o modal
     }
 
     // Função para fechar o modal
     function closeModal() {
         setShowModal(false);
-        setNovoItem({ id: null, nome: '', quantidade: '', categoria: '', abrigoId: id });
+        // Reiniciando o estado do novoItem
+        setNovoItem({
+            id: null,
+            nome: '',
+            quantidade: '',
+            categoria: '', // Inicialmente vazio
+            abrigoId: id
+        });
+        setErrors({}); // Limpa os erros ao fechar o modal
     }
 
     // Função para lidar com a mudança nos campos do formulário
@@ -83,10 +122,16 @@ function DashboardAbrigo() {
     // Função para lidar com o envio do formulário
     async function handleSubmit(event) {
         event.preventDefault();
-        if (novoItem.id) {
-            await updateItem();
+        setIsSubmitting(true);
+        if (validateForm()) {
+            if (novoItem.id) {
+                await updateItem();
+            } else {
+                await createItem();
+            }
+            setIsSubmitting(false);
         } else {
-            await createItem();
+            setIsSubmitting(false);
         }
     }
 
@@ -118,10 +163,46 @@ function DashboardAbrigo() {
         }
     }
 
+    function validateForm() {
+        let formErrors = {};
+        if (!novoItem.nome) formErrors.nome = "Nome é obrigatório";
+        if (!novoItem.quantidade) formErrors.quantidade = "Quantidade é obrigatória";
+        if (!novoItem.categoria) formErrors.categoria = "Categoria é obrigatória";
+        setErrors(formErrors);
+        return Object.keys(formErrors).length === 0;
+    }
+
     // Efeito para carregar os itens ao montar o componente ou ao mudar o ID do abrigo
     useEffect(() => {
         getItens();
     }, [id]);
+
+    // Estado para controlar o modal de edição do item existente
+    const [showEditModal, setShowEditModal] = useState(false);
+
+    // Função para fechar o modal de edição
+    function closeEditModal() {
+        setShowEditModal(false);
+    }
+
+    // Função para confirmar a edição do item duplicado
+    function confirmEdit() {
+        setNovoItem({ ...duplicateItem });
+        setShowModal(true); // Abrir modal de adição/edição com os dados do item duplicado
+        setShowEditModal(false); // Fechar modal de confirmação de edição
+    }
+
+    // Função para abrir o modal de confirmação de exclusão
+    function openDeleteModal(item) {
+        setDeleteItem(item); // Define o item que será excluído
+        setShowDeleteModal(true); // Abre o modal de confirmação de exclusão
+    }
+
+    // Função para fechar o modal de confirmação de exclusão
+    function closeDeleteModal() {
+        setShowDeleteModal(false);
+        setDeleteItem(null); // Limpa o item a ser excluído
+    }
 
     return (
         <div className="dashboard-container">
@@ -150,10 +231,10 @@ function DashboardAbrigo() {
                             <td>{item.categoria}</td>
                             <td>
                                 <button className='icon-button' onClick={() => openModal(item)}>
-                                    <img src={Edit}/>
+                                    <img src={Edit} alt="Editar"/>
                                 </button>
-                                <button className='icon-button' onClick={() => deleteItem(item.id)}>
-                                <img src={Trash}/>
+                                <button className='icon-button' onClick={() => openDeleteModal(item)}>
+                                    <img src={Trash} alt="Excluir"/>
                                 </button>
                             </td>
                         </tr>
@@ -181,6 +262,7 @@ function DashboardAbrigo() {
                                     value={novoItem.nome}
                                     onChange={handleChange}
                                 />
+                                {isSubmitting && errors.nome && <span className="error">{errors.nome}</span>}
                             </label>
                             <label>
                                 Quantidade:
@@ -189,19 +271,50 @@ function DashboardAbrigo() {
                                     name="quantidade"
                                     value={novoItem.quantidade}
                                     onChange={handleChange}
+                                    min="0"
                                 />
+                                {isSubmitting && errors.quantidade && <span className="error">{errors.quantidade}</span>}
                             </label>
                             <label>
                                 Categoria:
-                                <input
-                                    type="text"
-                                    name="categoria"
-                                    value={novoItem.categoria}
-                                    onChange={handleChange}
-                                />
+                                <select name="categoria" value={novoItem.categoria} onChange={handleChange}>
+                                    {categorias.map(cat => (
+                                        <option key={cat.value} value={cat.value}>
+                                            {cat.label}
+                                        </option>
+                                    ))}
+                                    <option value="">Selecione uma categoria</option>
+                                </select>
+                                {isSubmitting && errors.categoria && <span className="error">{errors.categoria}</span>}
                             </label>
                             <button type="submit">Salvar</button>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal para confirmação de edição do item duplicado */}
+            {showEditModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={closeEditModal}>&times;</span>
+                        <h3>Item Duplicado Encontrado</h3>
+                        <h4>Já existe um item com o nome "{duplicateItem.nome}". Deseja editar este item?</h4>
+                        <button onClick={confirmEdit}>Editar Item</button>
+                        <button onClick={closeEditModal}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal para confirmação de exclusão */}
+            {showDeleteModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={closeDeleteModal}>&times;</span>
+                        <h3>Confirmar Exclusão</h3>
+                        <h4>Deseja realmente excluir o item "{deleteItem.nome}"?</h4>
+                        <button onClick={() => deleteItemConfirmed(deleteItem.id)}>Sim</button>
+                        <button onClick={closeDeleteModal}>Não</button>
                     </div>
                 </div>
             )}
