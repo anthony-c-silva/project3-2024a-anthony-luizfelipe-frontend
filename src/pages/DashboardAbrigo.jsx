@@ -60,8 +60,13 @@ function DashboardAbrigo() {
                 setShowEditModal(true); // Abre o modal de confirmação de edição
                 return; // Interrompe o fluxo aqui para não continuar com a criação
             }
-            console.log(novoItem);
-            await api.post('/itens', novoItem);
+            console.log(novoItem.abrigoId);
+            await api.post('/itens',{ 
+                    nome: novoItem.nome,
+                    quantidade: novoItem.quantidade,
+                    categoria: novoItem.categoria,
+                    abrigoId: novoItem.abrigoId
+                 });
             getItens();
             closeModal();
         } catch (error) {

@@ -54,6 +54,7 @@ function DashboardUsuario() {
                 return; // Interrompe o fluxo aqui para não continuar com a criação
             }
             console.log('Pre post')
+            
             await api.post('/abrigos', {
                 nome: novoAbrigo.nome,
                 endereco: novoAbrigo.endereco,
