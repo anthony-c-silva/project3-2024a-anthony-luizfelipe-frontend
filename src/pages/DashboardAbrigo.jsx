@@ -60,7 +60,7 @@ function DashboardAbrigo() {
                 setShowEditModal(true); // Abre o modal de confirmação de edição
                 return; // Interrompe o fluxo aqui para não continuar com a criação
             }
-            console.log(novoItem);
+            console.log(novoItem.abrigoId + Number(novoItem.quantidade));
             await api.post('/itens',{ 
                     nome: novoItem.nome,
                     quantidade: Number(novoItem.quantidade),
