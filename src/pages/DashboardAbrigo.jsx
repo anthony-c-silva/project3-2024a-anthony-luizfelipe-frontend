@@ -13,7 +13,7 @@ function DashboardAbrigo() {
         nome: '',
         quantidade: '',
         categoria: '', // Inicialmente vazio
-        abrigoId: id
+        abrigoId: Number(id)
     });
     const [showModal, setShowModal] = useState(false);
     const [showSearchModal, setShowSearchModal] = useState(false);
@@ -63,7 +63,7 @@ function DashboardAbrigo() {
             console.log(novoItem);
             await api.post('/itens',{ 
                     nome: novoItem.nome,
-                    quantidade: novoItem.quantidade,
+                    quantidade: Number(novoItem.quantidade),
                     categoria: novoItem.categoria,
                     abrigoId: novoItem.abrigoId
                  });
