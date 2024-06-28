@@ -41,8 +41,8 @@ function DashboardAbrigo() {
     // Função assíncrona para buscar itens vinculados ao abrigo
     async function getItens() {
         try {
-            const response = await api.get('/api/itens');
-            const itensFiltrados = response.data.filter(item => item.abrigoId === parseInt(id));
+            const response = await api.get('/itens');
+            const itensFiltrados = response.data.itens.filter(item => item.abrigoId === parseInt(id));
             setItens(itensFiltrados);
         } catch (error) {
             console.error('Erro ao buscar itens:', error);
@@ -61,7 +61,7 @@ function DashboardAbrigo() {
                 return; // Interrompe o fluxo aqui para não continuar com a criação
             }
 
-            await api.post('/api/itens', novoItem);
+            await api.post('/itens', novoItem);
             getItens();
             closeModal();
         } catch (error) {
@@ -72,7 +72,7 @@ function DashboardAbrigo() {
     // Função assíncrona para atualizar um item
     async function updateItem() {
         try {
-            await api.put(`/api/itens/${novoItem.id}`, novoItem);
+            await api.put(`/itens/${novoItem.id}`, novoItem);
             getItens();
             closeModal();
         } catch (error) {
@@ -83,7 +83,7 @@ function DashboardAbrigo() {
     // Função assíncrona para deletar um item
     async function deleteItemConfirmed(id) {
         try {
-            await api.delete(`/api/itens/${id}`);
+            await api.delete(`/itens/${id}`);
             getItens();
             setShowDeleteModal(false); // Fecha o modal após a exclusão
         } catch (error) {
@@ -139,8 +139,8 @@ function DashboardAbrigo() {
     async function handleSearch(event) {
         event.preventDefault();
         try {
-            const response = await api.get('/api/itens');
-            const itensFiltrados = response.data.filter(item => {
+            const response = await api.get('/itens');
+            const itensFiltrados = response.data.itens.filter(item => {
                 if (item.abrigoId !== parseInt(id)) {
                     return false; // Filtra itens que não pertencem ao abrigo atual
                 }
