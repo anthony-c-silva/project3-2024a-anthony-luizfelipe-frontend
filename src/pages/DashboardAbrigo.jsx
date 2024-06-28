@@ -13,7 +13,7 @@ function DashboardAbrigo() {
         nome: '',
         quantidade: '',
         categoria: '', // Inicialmente vazio
-        abrigoId: Number(id)
+        abrigoId: Number(id) // Convertendo id para número
     });
     const [showModal, setShowModal] = useState(false);
     const [showSearchModal, setShowSearchModal] = useState(false);
@@ -61,12 +61,12 @@ function DashboardAbrigo() {
                 return; // Interrompe o fluxo aqui para não continuar com a criação
             }
             console.log(novoItem);
-            await api.post('/itens',{ 
-                    nome: novoItem.nome,
-                    quantidade: Number(novoItem.quantidade),
-                    categoria: novoItem.categoria,
-                    abrigoId: novoItem.abrigoId
-                 });
+            await api.post('/itens', { 
+                nome: novoItem.nome,
+                quantidade: Number(novoItem.quantidade),
+                categoria: novoItem.categoria,
+                abrigoId: Number(novoItem.abrigoId)
+            });
             getItens();
             closeModal();
         } catch (error) {
@@ -77,7 +77,11 @@ function DashboardAbrigo() {
     // Função assíncrona para atualizar um item
     async function updateItem() {
         try {
-            await api.put(`/itens/${novoItem.id}`, novoItem);
+            await api.put(`/itens/${novoItem.id}`, {
+                ...novoItem,
+                quantidade: Number(novoItem.quantidade),
+                abrigoId: Number(novoItem.abrigoId)
+            });
             getItens();
             closeModal();
         } catch (error) {
@@ -99,7 +103,7 @@ function DashboardAbrigo() {
     // Função para abrir o modal de adição/edição de item
     function openModal(item = { id: null, nome: '', quantidade: '', categoria: '', abrigoId: id }) {
         // Definindo o item atualizado no estado do novoItem
-        setNovoItem({ ...item, abrigoId: id });
+        setNovoItem({ ...item, abrigoId: Number(id) });
         setShowModal(true);
         setDuplicateItem(null); // Limpa o estado do item duplicado ao abrir o modal
     }
@@ -113,7 +117,7 @@ function DashboardAbrigo() {
             nome: '',
             quantidade: '',
             categoria: '', // Inicialmente vazio
-            abrigoId: id
+            abrigoId: Number(id)
         });
         setErrors({}); // Limpa os erros ao fechar o modal
     }
@@ -121,7 +125,10 @@ function DashboardAbrigo() {
     // Função para lidar com a mudança nos campos do formulário
     function handleChange(event) {
         const { name, value } = event.target;
-        setNovoItem({ ...novoItem, [name]: value });
+        setNovoItem({ 
+            ...novoItem, 
+            [name]: name === 'quantidade' ? Number(value) : value 
+        });
     }
 
     // Função para lidar com o envio do formulário
