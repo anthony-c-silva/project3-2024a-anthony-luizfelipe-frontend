@@ -60,7 +60,6 @@ function DashboardAbrigo() {
                 setShowEditModal(true); // Abre o modal de confirmação de edição
                 return; // Interrompe o fluxo aqui para não continuar com a criação
             }
-            console.log(novoItem);
             await api.post('/itens', { 
                 nome: novoItem.nome,
                 quantidade: Number(novoItem.quantidade),
@@ -92,8 +91,16 @@ function DashboardAbrigo() {
     // Função assíncrona para deletar um item
     async function deleteItemConfirmed(id) {
         try {
-            // Exclui todas as dependências primeiro
-            await api.delete(`/doacoes/${id}`);
+            // Tenta excluir todas as doações relacionadas
+            try {
+                await api.delete(`/doacoes/${id}`);
+            } catch (error) {
+                if (error.response && error.response.status !== 404) {
+                    // Se o erro não for 404 (Not Found), re-throw o erro para ser tratado no catch externo
+                    throw error;
+                }
+                // Se for 404, continua sem problemas, pois significa que não há doações relacionadas
+            }
             
             // Exclui o item
             await api.delete(`/itens/${id}`);
@@ -104,6 +111,7 @@ function DashboardAbrigo() {
             console.error(`Erro ao deletar item com ID ${id}:`, error);
         }
     }
+
 
     // Função para abrir o modal de adição/edição de item
     function openModal(item = { id: null, nome: '', quantidade: '', categoria: '', abrigoId: id }) {
