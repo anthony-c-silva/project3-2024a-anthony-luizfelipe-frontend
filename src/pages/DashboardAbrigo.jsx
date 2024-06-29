@@ -93,7 +93,7 @@ function DashboardAbrigo() {
     async function deleteItemConfirmed(id) {
         try {
             // Exclui todas as dependências primeiro
-            await api.delete(`/doacoes?itemId=${id}`);
+            await api.delete(`/doacoes/${id}`);
             
             // Exclui o item
             await api.delete(`/itens/${id}`);
