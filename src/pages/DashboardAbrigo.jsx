@@ -93,7 +93,7 @@ function DashboardAbrigo() {
     async function deleteItemConfirmed(id) {
         try {
             // Exclui todas as dependências primeiro
-            await api.delete(`/doacoes/${id}`);
+            await api.delete(`/doacoes?itemId=${id}`);
             
             // Exclui o item
             await api.delete(`/itens/${id}`);
@@ -170,69 +170,62 @@ function DashboardAbrigo() {
                 } else if (searchCriteria === 'categoria') {
                     return item.categoria.toLowerCase().includes(searchValue.toLowerCase());
                 }
-                return true; // Retorna todos os itens se o critério não corresponder a nenhum dos casos
+                return false;
             });
-            setItens(itensFiltrados);
+            console.log('Itens encontrados:', itensFiltrados);
+            setItens(itensFiltrados); // Atualiza os itens com o resultado da pesquisa
             setShowSearchModal(false); // Fecha o modal após a pesquisa
         } catch (error) {
             console.error('Erro ao buscar itens:', error);
         }
     }
 
-    // Função de validação do formulário
     function validateForm() {
-        const { nome, quantidade, categoria } = novoItem;
-        const newErrors = {};
+        let formErrors = {};
+        if (!novoItem.nome) formErrors.nome = "Nome é obrigatório";
+        if (!novoItem.quantidade) formErrors.quantidade = "Quantidade é obrigatória";
+        if (!novoItem.categoria) formErrors.categoria = "Categoria é obrigatória";
+        setErrors(formErrors);
+        return Object.keys(formErrors).length === 0;
+    }
 
-        if (!nome.trim()) {
-            newErrors.nome = 'O nome é obrigatório.';
-        }
+    // Efeito para carregar os itens ao montar o componente ou ao mudar o ID do abrigo
+    useEffect(() => {
+        getItens();
+    }, [id]);
 
-        if (!quantidade || quantidade < 0) {
-            newErrors.quantidade = 'A quantidade deve ser um número positivo.';
-        }
+    // Estado para controlar o modal de edição do item existente
+    const [showEditModal, setShowEditModal] = useState(false);
 
-        if (!categoria.trim()) {
-            newErrors.categoria = 'A categoria é obrigatória.';
-        }
+    // Função para fechar o modal de edição
+    function closeEditModal() {
+        setShowEditModal(false);
+    }
 
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+    // Função para confirmar a edição do item duplicado
+    function confirmEdit() {
+        setNovoItem({ ...duplicateItem });
+        setShowModal(true); // Abrir modal de adição/edição com os dados do item duplicado
+        setShowEditModal(false); // Fechar modal de confirmação de edição
     }
 
     // Função para abrir o modal de confirmação de exclusão
     function openDeleteModal(item) {
-        setDeleteItem(item); // Armazena o item a ser excluído
+        setDeleteItem(item); // Define o item que será excluído
         setShowDeleteModal(true); // Abre o modal de confirmação de exclusão
     }
 
     // Função para fechar o modal de confirmação de exclusão
     function closeDeleteModal() {
-        setShowDeleteModal(false); // Fecha o modal de confirmação de exclusão
-        setDeleteItem(null); // Limpa o estado do item a ser excluído
+        setShowDeleteModal(false);
+        setDeleteItem(null); // Limpa o item a ser excluído
     }
-
-    // Função para confirmar a edição do item duplicado
-    async function confirmEdit() {
-        setNovoItem(duplicateItem); // Define o item duplicado como o item a ser editado
-        setShowEditModal(false); // Fecha o modal de confirmação de edição
-        setShowModal(true); // Abre o modal de edição
-    }
-
-    // Função para fechar o modal de confirmação de edição
-    function closeEditModal() {
-        setShowEditModal(false); // Fecha o modal de confirmação de edição
-        setDuplicateItem(null); // Limpa o estado do item duplicado
-    }
-
-    useEffect(() => {
-        getItens();
-    }, []);
 
     return (
         <div className="dashboard-container">
-            <div className="dashboard-header">
-                <h2>Dashboard do Abrigo</h2>
+            <h2>Itens do Abrigo</h2>
+            <div className="button-container">
+                <button onClick={() => openModal()}>Adicionar Item</button>
                 <button onClick={() => setShowSearchModal(true)}>Pesquisar</button>
                 <button onClick={() => getItens()}>Mostrar Tudo</button>
             </div>
