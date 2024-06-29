@@ -91,26 +91,27 @@ function DashboardAbrigo() {
     // Função assíncrona para deletar um item
     async function deleteItemConfirmed(id) {
         try {
-            // Tenta excluir todas as doações relacionadas
-            try {
-                await api.delete(`/doacoes/${id}`);
-            } catch (error) {
-                if (error.response && error.response.status !== 404) {
-                    // Se o erro não for 404 (Not Found), re-throw o erro para ser tratado no catch externo
-                    throw error;
+            // Verifica se existem doações relacionadas
+            const doacoesResponse = await api.get(`/doacoes/${id}`);
+            const doacoes = doacoesResponse.data;
+
+            // Exclui todas as doações relacionadas, se houver
+            if (doacoes.length > 0) {
+                for (const doacao of doacoes) {
+                    await api.delete(`/doacoes/${doacao.id}`);
                 }
-                // Se for 404, continua sem problemas, pois significa que não há doações relacionadas
             }
-            
+
             // Exclui o item
             await api.delete(`/itens/${id}`);
-            
+
             getItens();
             setShowDeleteModal(false); // Fecha o modal após a exclusão
         } catch (error) {
             console.error(`Erro ao deletar item com ID ${id}:`, error);
         }
     }
+
 
 
     // Função para abrir o modal de adição/edição de item
