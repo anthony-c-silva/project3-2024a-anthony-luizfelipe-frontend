@@ -13,10 +13,10 @@ function TelaInicial() {
         <img src={Cuidar} className="logo react" alt="React logo" />
       </div>
       
-      <h1>Gestão de Abrigos</h1>
+      <h1 className='titulo'>Gestão de Abrigos</h1>
       
-      <div className="card">
-        <p>
+      <div>
+        <p className=''>
           Faça a gestão de abrigos de forma simples e eficiente
         </p>
       </div>

@@ -1,52 +1,108 @@
-
+/* Estilos para o container de login */
 .login-container {
-    
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    align-items: center;
-    border-radius: 10px;
-    background-color: #2E2D4E;
-    width: 600px;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  border-radius: 15px;
+  background-color: #ddf8e4; /* Branco gelo */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 5%;
+}
+
+/* Estilos para o título de login */
+.titulo {
+  color: #333;
+  font-size: 34px;
+  margin-bottom: 20px;
+  margin-top: 0px;
+  font-weight: 700;
+}
+
+/* Estilos para a logo */
+.logo {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+.logo.react {
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #2cff02);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #33ff00);
+}
+
+/* Estilos para o botão */
+.login-button {
+  width: 67%;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #4caf50; /* Cor que combina com a temática de controle de estoque */
+  color: white;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Estilos para os inputs */
+input {
+  border-radius: 10px;
+  height: 40px;
+  width: 100%;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s;
+  margin-bottom: 10px;
+}
+
+input:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* Estilos para a mensagem de erro */
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: -10px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 1024px) {
+  .login-container {
+    margin: 0 auto;
+    padding: 20px;
   }
 
-  h2 {
-    color: aliceblue;
-    font-size: 24px;
-  }
-
-  button {
-    margin: 0 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  
-  button:hover {
-    opacity: 0.8;
+  .titulo {
+    font-size: 28px;
   }
 
   .login-button {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .login-button:hover {
-    background-color: #0056b3;
+    font-size: 14px;
+    padding: 8px 16px;
   }
 
   input {
-    border-radius: 10px;
-    height: 40px;
-    width: 80%;
-    padding: 0 10px;
-    border: none;
-    font-size: 18px;
-    background-color: aliceblue;
-    color: black;
+    height: 35px;
+    font-size: 14px;
   }
-  
+}

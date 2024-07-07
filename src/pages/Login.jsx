@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
+import Cuidar from '../assets/cuidar.svg';
 import axios from 'axios';
 import {jwtDecode} from "jwt-decode";
 
@@ -37,7 +38,10 @@ function Login() {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <div>
+        <img src={Cuidar} className="logo react" alt="React logo" />
+      </div>
+      <h2 className="titulo">Login</h2>
       {error && <p className="error-message">{error}</p>}
       <div>
         <input
