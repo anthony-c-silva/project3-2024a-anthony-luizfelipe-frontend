@@ -1,4 +1,22 @@
-/* Estilos para o container de login */
+/* Estilos para a página de login */
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.login-image-container {
+  display: none;
+}
+
+.login-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .login-container {
   display: flex;
   flex-direction: column;
@@ -7,42 +25,30 @@
   justify-content: center;
   padding: 40px;
   border-radius: 15px;
-  background-color: #ddf8e4; /* Branco gelo */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  margin-top: 5%;
+  background-color: #cff8da;
+  min-width: 50%;
+  margin: 5% auto 0; /* Alinhado ao centro com margem superior */
 }
 
-/* Estilos para o título de login */
 .titulo {
   color: #333;
   font-size: 34px;
   margin-bottom: 20px;
-  margin-top: 0px;
   font-weight: 700;
 }
 
-/* Estilos para a logo */
 .logo {
-  width: 100px;
   margin-bottom: 20px;
-}
-
-.logo.react {
   transition: filter 300ms;
+  width: 30%; /* Ajuste o tamanho conforme necessário */
+  height: 30%;
 }
 
 .logo:hover {
   filter: drop-shadow(0 0 2em #2cff02);
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #33ff00);
-}
-
-/* Estilos para o botão */
 .login-button {
   width: 67%;
   padding: 10px 20px;
@@ -59,7 +65,6 @@ button:hover {
   background-color: #45a049;
 }
 
-/* Estilos para os inputs */
 input {
   border-radius: 10px;
   height: 40px;
@@ -78,32 +83,58 @@ input:focus {
   outline: none;
 }
 
-/* Estilos para a mensagem de erro */
 .error-message {
   color: #ff0000;
   font-size: 14px;
   margin-top: -10px;
 }
 
-/* Estilos responsivos */
-@media (max-width: 1024px) {
+@media (min-width: 768px) {
+  .login-page {
+    flex-direction: row;
+  }
+
+  .login-image-container {
+    display: flex;
+    width: 50%;
+    height: 100vh;
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+  }
+
+  .login-image {
+    width: 100%; /* Ajuste o tamanho conforme necessário */
+    height: auto;
+    border-radius: 0 0 0 15px;
+  }
+
+  .login-wrapper {
+    width: 50%;
+    height: 100vh;
+    box-shadow: -5px 0 15px -10px rgba(0, 0, 0, 0.3); /* Sombra no lado esquerdo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #cff8da;
+  }
   .login-container {
-    margin: 0 auto;
-    padding: 20px;
+    max-width: 100%;
+    background-color: #f8f9fa;
   }
 
-  .titulo {
-    font-size: 28px;
+  /* Estilo adicional para centralizar os divs dos inputs */
+  .login-container div {
+    width: 80%;
+    min-width: 70%;
+    display: flex;
+    justify-content: center;
   }
+}
 
-  .login-button {
-    font-size: 14px;
-    padding: 8px 16px;
-    max-width: 104px;
-  }
-
-  input {
-    height: 35px;
-    font-size: 14px;
+@media (max-width: 767px) {
+  .logo {
+    width: 40%; /* Ajuste o tamanho conforme necessário */
+    height: 40%;
+    
   }
 }
