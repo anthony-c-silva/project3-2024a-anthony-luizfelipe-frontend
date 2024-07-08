@@ -8,25 +8,24 @@ function TelaInicial() {
   const navigate = useNavigate();
 
   return (
-    <>
-      <div>
+    <div className="tela-inicial">
+      <div className="logo-container">
         <img src={Cuidar} className="logo react" alt="React logo" />
       </div>
       
-      <h1 className='titulo'>Gestão de Abrigos</h1>
+      <h1 className="titulo">Gestão de Abrigos</h1>
       
-      <div>
-        <p className='texto_p'>
+      <div className="descricao-container">
+        <p className="descricao">
           Faça a gestão de abrigos de forma simples e eficiente
         </p>
       </div>
 
-      <div className="button-container">
-        <button className="login-button" onClick={() => navigate('/login')}>Login</button>
-        <button className="signup-button" onClick={() => navigate('/cadastro')}>Cadastro</button>
+      <div className="botoes-container">
+        <button className="botao" onClick={() => navigate('/login')}>Login</button>
+        <button className="botao" onClick={() => navigate('/cadastro')}>Cadastro</button>
       </div>
-      
-    </>
+    </div>
   );
 }
 

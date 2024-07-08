@@ -1,73 +1,68 @@
+/* Estilos para a tela inicial */
+.tela-inicial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: url('../assets/background-image.jpg') no-repeat center center fixed;
+  background-size: cover;
+  text-align: center;
+}
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+@media (max-width: 768px) {
+  .tela-inicial {
+    background: #f8f9fa;
+  }
+}
+
+.logo-container {
+  margin-bottom: 20px;
+}
+
+.logo.react {
+  width: 50%;
+  height: 50%;
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #2cff02);
 }
+
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #33ff00);
 }
-
-.logo {
-  width: 100px;
-  margin: 0 auto;
-}
-
-h1 {
-  text-align: center;
-  margin-top: 20px;
-}
-.texto_p{
+.titulo {
+  font-size: 36px;
   color: #333;
+  margin-bottom: 20px;
 }
 
+.descricao-container {
+  margin-bottom: 30px;
+}
 
-.button-container {
+.descricao {
+  font-size: 18px;
+  color: #555;
+}
+
+.botoes-container {
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  gap: 20px;
 }
 
-button {
-  margin: 0 10px;
+.botao {
   padding: 10px 20px;
   font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.8;
-}
-
-.login-button {
-
+  background-color: #4caf50;
   color: white;
-  font-size: 14px;
-  padding: 8px 16px;
-  max-width: 104px;
+  transition: background-color 0.3s;
 }
 
-.login-button:hover {
-  background-color: #0056b3;
+.botao:hover {
+  background-color: #45a049;
 }
-
-.signup-button {
-  background-color: #28a745;
-  color: white;
-  font-size: 14px;
-  padding: 8px 16px;
-  max-width: 104px;
-}
-
-.signup-button:hover {
-  background-color: #0056b3;
-}
-
-
-
