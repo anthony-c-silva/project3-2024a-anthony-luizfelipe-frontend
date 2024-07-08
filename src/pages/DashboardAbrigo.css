@@ -39,14 +39,6 @@ button:hover {
     transform: scale(1.05);
 }
 
-.signup-button {
-    background-color: #28a745;
-    color: white;
-}
-
-.signup-button:hover {
-    background-color: #218838;
-}
 
 /* Inputs */
 input {

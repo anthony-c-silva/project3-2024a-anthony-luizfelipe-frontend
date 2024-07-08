@@ -99,6 +99,7 @@ input:focus {
   .login-button {
     font-size: 14px;
     padding: 8px 16px;
+    max-width: 104px;
   }
 
   input {

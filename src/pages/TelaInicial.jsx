@@ -16,7 +16,7 @@ function TelaInicial() {
       <h1 className='titulo'>Gestão de Abrigos</h1>
       
       <div>
-        <p className=''>
+        <p className='texto_p'>
           Faça a gestão de abrigos de forma simples e eficiente
         </p>
       </div>

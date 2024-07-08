@@ -1,9 +1,3 @@
-#root {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
 
 .logo {
   height: 6em;
@@ -27,7 +21,9 @@ h1 {
   text-align: center;
   margin-top: 20px;
 }
-
+.texto_p{
+  color: #333;
+}
 
 
 .button-container {
@@ -50,8 +46,11 @@ button:hover {
 }
 
 .login-button {
-  background-color: #007bff;
+
   color: white;
+  font-size: 14px;
+  padding: 8px 16px;
+  max-width: 104px;
 }
 
 .login-button:hover {
@@ -61,10 +60,13 @@ button:hover {
 .signup-button {
   background-color: #28a745;
   color: white;
+  font-size: 14px;
+  padding: 8px 16px;
+  max-width: 104px;
 }
 
 .signup-button:hover {
-  background-color: #218838;
+  background-color: #0056b3;
 }
 
 
