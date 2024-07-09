@@ -60,12 +60,14 @@ function DashboardAbrigo() {
                 setShowEditModal(true); // Abre o modal de confirmação de edição
                 return; // Interrompe o fluxo aqui para não continuar com a criação
             }
+            console.log(novoItem.abrigoId); // adicionando o id do usuario ao inves do id do abrigo em que o usuario foi adicionado
             await api.post('/itens', { 
                 nome: novoItem.nome,
                 quantidade: Number(novoItem.quantidade),
                 categoria: novoItem.categoria,
                 abrigoId: Number(novoItem.abrigoId)
             });
+
             getItens();
             closeModal();
         } catch (error) {
