@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import Cuidar from '../assets/cuidar.svg';
-import axios from 'axios';
+import api from '../services/api';
 import { jwtDecode } from "jwt-decode";
 import LoginImage from '../assets/mobile-login-cuate.png'; // Adicione a imagem que deseja usar
 import Loading from './Loading'; // Importe o componente de Loading
@@ -28,14 +28,17 @@ function Login() {
     setLoading(true); // Ativa o Loading antes de fazer a requisição
 
     try {
-      const response = await axios.post('https://project3-2024a-anthony-luizfelipe-backend.onrender.com/login', data);
+      const response = await api.post('/login', data);
       const { token } = response.data;
       localStorage.setItem('token', token);
 
       const decodedToken = jwtDecode(token);
       const { id } = decodedToken;
 
-      navigate(`/dashboard-abrigo/${id}`);
+      const userResponse = await api.get(`/usuarios/${id}`);
+      const { abrigoId } = userResponse.data.usuario;
+
+      navigate(`/dashboard-abrigo/${abrigoId}`);
     } catch (error) {
       setError('Erro ao fazer login. Verifique suas credenciais.');
     } finally {
@@ -50,9 +53,7 @@ function Login() {
       </div>
       <div className="login-wrapper">
         <div className="login-container">
-         
           <img src={Cuidar} className="logo" alt="React logo" />
-        
           <h2 className="titulo">Login</h2>
           {error && <p className="error-message">{error}</p>}
           <div>
