@@ -6,9 +6,10 @@
     gap: 30px;
     align-items: center;
     border-radius: 10px;
-    background-color: #2E2D4E;
+    background-color: #cff8da;
     width: 600px;
     margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(5, 5, 5, 0.322);
   }
 
   h2 {
