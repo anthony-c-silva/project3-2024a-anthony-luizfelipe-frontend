@@ -6,7 +6,7 @@
   justify-content: center;
   min-height: 100vh;
   min-width: 100vw;
-  background: url('../assets/background-image.jpg') no-repeat center center fixed;
+  background: url('../assets/background-image.png') no-repeat center center fixed;
   background-size: cover;
   text-align: center;
 }
