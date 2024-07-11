@@ -5,16 +5,13 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  min-width: 100vw;
   background: url('../assets/background-image.jpg') no-repeat center center fixed;
   background-size: cover;
   text-align: center;
 }
 
-@media (max-width: 768px) {
-  .tela-inicial {
-    background: #f8f9fa;
-  }
-}
+
 
 .logo-container {
   margin-bottom: 20px;
@@ -25,16 +22,14 @@
   height: 50%;
   transition: filter 300ms;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #2cff02);
-}
 
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #33ff00);
 }
-.titulo {
+
+.titulo-init {
   font-size: 36px;
-  color: #333;
+  color: #fafafa;
   margin-bottom: 20px;
 }
 
@@ -44,16 +39,18 @@
 
 .descricao {
   font-size: 18px;
-  color: #555;
+  color: #ffffff;
 }
 
 .botoes-container {
   display: flex;
   gap: 20px;
+  justify-content: center; /* Opcional: centraliza os botões no contêiner */
 }
 
 .botao {
-  padding: 10px 20px;
+  flex: 1; /* Faz com que os botões ocupem a mesma quantidade de espaço */
+  padding: 10px 20px; /* Ajuste o padding verticalmente, se necessário */
   font-size: 16px;
   border: none;
   border-radius: 5px;
@@ -61,6 +58,36 @@
   background-color: #4caf50;
   color: white;
   transition: background-color 0.3s;
+  text-align: center; /* Centraliza o texto dentro dos botões */
+}
+.botao-log {
+  flex: 1; 
+  padding: 10px 33px; 
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  transition: background-color 0.3s;
+  text-align: center; /* Centraliza o texto dentro dos botões */
+}
+.botao:hover {
+  background-color: #07880d;
 }
 
-
+@media (max-width: 768px) {
+  .tela-inicial {
+    background: #f8f9fa;
+  }
+  .descricao {
+    font-size: 18px;
+    color: #000000;
+  }
+  .titulo-init {
+    font-size: 36px;
+    color: #000000;
+    margin-bottom: 20px;
+  }
+  
+}

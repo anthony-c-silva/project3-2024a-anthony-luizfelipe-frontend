@@ -13,7 +13,7 @@ function TelaInicial() {
         <img src={Cuidar} className="logo react" alt="React logo" />
       </div>
       
-      <h1 className="titulo">Gestão de Abrigos</h1>
+      <h1 className="titulo-init">Gestão de Abrigos</h1>
       
       <div className="descricao-container">
         <p className="descricao">
@@ -22,7 +22,7 @@ function TelaInicial() {
       </div>
 
       <div className="botoes-container">
-        <button className="botao" onClick={() => navigate('/login')}>Login</button>
+        <button className="botao-log  " onClick={() => navigate('/login')}>Login</button>
         <button className="botao" onClick={() => navigate('/cadastro')}>Cadastro</button>
       </div>
     </div>
