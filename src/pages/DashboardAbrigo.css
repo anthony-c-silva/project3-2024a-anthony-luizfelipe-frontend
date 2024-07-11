@@ -37,6 +37,7 @@ button {
 button:hover {
     opacity: 0.8;
     transform: scale(1.05);
+ 
 }
 
 
@@ -89,10 +90,10 @@ select:focus {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
-    background-color: #e4dddd;
+    background-color: #c6e7d6;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.192);
 }
 
 .abrigos-table thead tr,
@@ -109,27 +110,27 @@ select:focus {
 .abrigos-table td{
     color: rgb(255, 255, 255);
     padding: 12px 15px;
-    border-bottom: 1px solid #dddddd;
-    border-right: 1px solid #9c9c9c; /* Linha divisória entre colunas */
+    border-bottom: 0.5px solid #cff8da;
+    border-right: 0.5px solid #cff8da; /* Linha divisória entre colunas */
 }
 
 .itens-table td {
     color: rgb(0, 0, 0);
     padding: 1px 5px;
-    border-bottom: 1px solid #9c9c9c;
-    border-right: 1px solid #9c9c9c; /* Linha divisória entre colunas */
+    border-bottom: 1px solid #cff8da;
+    border-right: 1px solid #cff8da; /* Linha divisória entre colunas */
 }
 
 
 .abrigos-table tbody tr:nth-of-type(even),
 .itens-table tbody tr:nth-of-type(even) {
-    background-color: #b8b4b4;
+    background-color: #c2d1c9;
 }
 
 .abrigos-table tbody tr:hover,
 .itens-table tbody tr:hover {
     color: #ffffff;
-    background-color: #6a66ce;
+    background-color: #e3ffdf;
 }
 
 .abrigos-table td:last-child,
@@ -153,16 +154,16 @@ select:focus {
 }
 
 .modal-content {
-    background-color: #45a049;
+    background-color: #005804fb;
     padding: 20px;
     border-radius: 10px;
     width: 80%;
     max-width: 500px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(5, 5, 5, 0.322);
 }
 
 .close {
-    color: #aaaaaa;
+    color: #e3ffdf;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -183,7 +184,7 @@ form {
 }
 
 label {
-    color: #ffffff;
+    color: #b9b9b9;
     font-size: 18px;
     margin-bottom: 5px;
 }
