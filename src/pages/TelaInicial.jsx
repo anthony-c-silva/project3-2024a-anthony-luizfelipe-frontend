@@ -22,8 +22,8 @@ function TelaInicial() {
       </div>
 
       <div className="botoes-container">
-        <button className="botao-log  " onClick={() => navigate('/login')}>Login</button>
-        <button className="botao" onClick={() => navigate('/cadastro')}>Cadastro</button>
+        <button className="botao-log  " onClick={() => navigate('/login')}>Vamos lá</button>
+       
       </div>
     </div>
   );

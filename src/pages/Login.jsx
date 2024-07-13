@@ -33,11 +33,15 @@ function Login() {
       localStorage.setItem('token', token);
 
       const decodedToken = jwtDecode(token);
+
+      console.log("usuario:"+ decodedToken.abrigoId);
+
       const { id } = decodedToken;
-
+    
       const userResponse = await api.get(`/usuarios/${id}`);
+     
       const { abrigoId } = userResponse.data.usuario;
-
+     
       navigate(`/dashboard-abrigo/${abrigoId}`);
     } catch (error) {
       setError('Erro ao fazer login. Verifique suas credenciais.');
@@ -73,6 +77,7 @@ function Login() {
             />
           </div>
           <button className="login-button" onClick={handleLogin}>Entrar</button>
+          <label className='label'>Não tem uma conta? <a className="link" onClick={() => navigate('/cadastro')}>inscreva-se</a></label>
         </div>
       </div>
       {loading && <Loading />}
