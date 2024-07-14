@@ -36,11 +36,7 @@ function Login() {
 
       console.log("usuario:"+ decodedToken.abrigoId);
 
-      const { id } = decodedToken;
-    
-      const userResponse = await api.get(`/usuarios/${id}`);
-     
-      const { abrigoId } = userResponse.data.usuario;
+      const { abrigoId } = decodedToken;
      
       navigate(`/dashboard-abrigo/${abrigoId}`);
     } catch (error) {

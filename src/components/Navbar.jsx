@@ -11,7 +11,7 @@ const Navbar = () => {
         <img src={logo} alt="Logo" className="navbar-logo" />
         <ul className="navbar-links">
           <li><Link to="/dashboard-usuario">Abrigos</Link></li>
-          <li><Link to="/dashboard-abrigo/2">Itens</Link></li>
+          <li><Link to="/dashboard-abrigo/2">Itens</Link></li> // arrumar o direcionamento 
         </ul>
       </div>
       <div className="navbar-right">

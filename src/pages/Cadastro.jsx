@@ -137,15 +137,15 @@ function Cadastro() {
         </>
       ) : (
         <div>
-          <select className='input-cadastro' value={abrigoId} onChange={(e) => setAbrigoId(e.target.value)}>
-            <option value="">Selecione um abrigo</option>
-            {abrigos.map((abrigo) => (
-              <option key={abrigo.id} value={abrigo.id}>
-                {abrigo.nome}
-              </option>
-            ))}
-          </select>
-        </div>
+        <select className='input-select' value={abrigoId} onChange={(e) => setAbrigoId(e.target.value)}>
+          <option value="">Selecione um abrigo</option>
+          {abrigos.map((abrigo) => (
+            <option key={abrigo.id} value={abrigo.id}>
+              {abrigo.nome}
+            </option>
+          ))}
+        </select>
+      </div>
       )}
       <button className="signup-button" onClick={handleCadastro}>
         Cadastrar-se

@@ -49,6 +49,9 @@
 .link {
   color: #40a14d;
 }
+.link:hover {
+  text-decoration:underline;
+}
 .label{
   color: #000000;
 }
