@@ -6,6 +6,7 @@ import api from '../services/api';
 import './DashboardAbrigo.css';
 
 function DashboardAbrigo() {
+    const [nomeAbrigo, setNomeAbrigo] = useState(''); // Estado para armazenar o nome do abrigo
     const { id } = useParams();
     const [itens, setItens] = useState([]);
     const [novoItem, setNovoItem] = useState({
@@ -48,7 +49,18 @@ function DashboardAbrigo() {
             console.error('Erro ao buscar itens:', error);
         }
     }
-
+    // Função assíncrona para buscar detalhes do abrigo
+    async function getAbrigoDetails() {
+        try {
+          
+            const response = await api.get(`/abrigos/${id}`);
+            console.log(response);
+            setNomeAbrigo(response.data.abrigo.nome);
+           
+        } catch (error) {
+            console.error('Erro ao buscar detalhes do abrigo:', error);
+        }
+    }
     // Função assíncrona para criar um item
     async function createItem() {
         try {
@@ -203,6 +215,7 @@ function DashboardAbrigo() {
     // Efeito para carregar os itens ao montar o componente ou ao mudar o ID do abrigo
     useEffect(() => {
         getItens();
+        getAbrigoDetails();
     }, [id]);
 
     // Estado para controlar o modal de edição do item existente
@@ -234,7 +247,7 @@ function DashboardAbrigo() {
 
     return (
         <div className="dashboard-container">
-            <h2>Itens do Abrigo</h2>
+             <h2 className="dashboard-title">Itens do Abrigo: {nomeAbrigo}</h2>
             <div className="button-container">
                 <button onClick={() => openModal()}>Adicionar Item</button>
                 <button onClick={() => setShowSearchModal(true)}>Pesquisar</button>
