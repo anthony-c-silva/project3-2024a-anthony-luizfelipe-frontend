@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './DashboardAbrigo.css';
+import './DashboardAdm.css';
 import api from '../services/api.js';
 import { useNavigate } from 'react-router-dom';
 import Edit from '../assets/edit.svg';

@@ -38,7 +38,7 @@ function Login() {
 
       const { abrigoId } = decodedToken;
      
-      navigate(`/dashboard-abrigo/${abrigoId}`);
+      navigate(`/dashboard-adm/${abrigoId}`);
     } catch (error) {
       setError('Erro ao fazer login. Verifique suas credenciais.');
     } finally {

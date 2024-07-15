@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Edit from '../assets/edit.svg';
 import Trash from '../assets/trash.svg';
 import api from '../services/api';
-import './DashboardAbrigo.css';
+import './DashboardAdm.css';
 
 function DashboardAbrigo() {
     const [nomeAbrigo, setNomeAbrigo] = useState('');
