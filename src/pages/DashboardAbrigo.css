@@ -6,7 +6,8 @@
     align-items: center;
     border-radius: 10px;
     background-color: #cff8da;
-    width: 800px;
+    width: 80vw; /* Largura em vw para responsividade */
+    max-width: 800px;
     padding: 20px;
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.295);
@@ -18,6 +19,7 @@ h2 {
     font-size: 28px;
     margin-bottom: 20px;
     font-family: 'Arial', sans-serif;
+    text-align: center; /* Centralizado */
 }
 
 /* Botões */
@@ -37,15 +39,13 @@ button {
 button:hover {
     opacity: 0.8;
     transform: scale(1.05);
- 
 }
 
-
 /* Inputs */
-input {
+.input-abrigo {
     border-radius: 10px;
     height: 40px;
-    width: 100%;
+    width: calc(100% - 20px); /* Ajuste para largura total menos padding */
     padding: 0 10px;
     border: 2px solid #cccccc;
     font-size: 18px;
@@ -55,21 +55,20 @@ input {
     transition: border-color 0.3s ease;
 }
 
-input:focus {
+.input-abrigo:focus {
     border-color: #4CAF50;
     outline: none;
 }
 
-input:required {
+.input-abrigo:required {
     border: 1px dashed red;
-  }
+}
 
 /* Select */
-select {
-    align-items: left;
+.select-abrigo {
     border-radius: 10px;
     height: 40px;
-    width: 100%;
+    width: calc(100% - 20px); /* Ajuste para largura total menos padding */
     padding: 0 10px;
     border: 2px solid #cccccc;
     font-size: 18px;
@@ -79,7 +78,7 @@ select {
     transition: border-color 0.3s ease;
 }
 
-select:focus {
+.select-abrigo:focus {
     border-color: #4CAF50;
     outline: none;
 }
@@ -107,7 +106,7 @@ select:focus {
 
 .abrigos-table th,
 .itens-table th,
-.abrigos-table td{
+.abrigos-table td {
     color: rgb(255, 255, 255);
     padding: 12px 15px;
     text-align: center;
@@ -122,7 +121,6 @@ select:focus {
     border-bottom: 1px solid #cff8da;
     border-right: 1px solid #cff8da; /* Linha divisória entre colunas */
 }
-
 
 .abrigos-table tbody tr:nth-of-type(even),
 .itens-table tbody tr:nth-of-type(even) {
@@ -156,16 +154,16 @@ select:focus {
 }
 
 .modal-content {
-    background-color: #005804fb;
+    background-color: #cff8da;
     padding: 20px;
     border-radius: 10px;
-    width: 80%;
+    width: 90vw; /* Largura em vw para responsividade */
     max-width: 500px;
     box-shadow: 0 4px 8px rgba(5, 5, 5, 0.322);
 }
 
 .close {
-    color: #e3ffdf;
+    color: #080808;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -182,15 +180,23 @@ select:focus {
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 5px;
+    align-items: center; /* Centraliza os elementos */
 }
 
-label {
-    color: #b9b9b9;
+.label-abrigo {
+    color: #000000;
     font-size: 18px;
     margin-bottom: 5px;
+    width: 100%; /* Largura total */
 }
-
+.text{
+    color: #000000;
+    
+}
+.text-container{
+    margin-bottom: 5vh;
+}
 .icon-button {
     background-color: transparent;
     border: none;
@@ -204,8 +210,7 @@ img {
 
 form input,
 form select {
-    align-self: left;
-    width: 50%;
+    width: 100%; /* Largura total */
 }
 
 form button {
@@ -217,7 +222,6 @@ form button {
 
 /* Mensagens */
 p {
-    color: #ffffff;
-    font-weight: bold;
+    font-weight:normal;
     margin: 5px 0;
 }
