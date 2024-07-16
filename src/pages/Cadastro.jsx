@@ -15,6 +15,7 @@ function Cadastro() {
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState('');
   const [abrigos, setAbrigos] = useState([]);
+  const [loadingAbrigos, setLoadingAbrigos] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,12 +25,14 @@ function Cadastro() {
   }, [isAdmin]);
 
   const fetchAbrigos = async () => {
+    setLoadingAbrigos(true);
     try {
       const response = await axios.get('https://project3-2024a-anthony-luizfelipe-backend.onrender.com/abrigos');
       setAbrigos(response.data.abrigos);
     } catch (error) {
       console.error('Erro ao buscar abrigos:', error);
     }
+    setLoadingAbrigos(false);
   };
 
   const validateForm = () => {
@@ -160,15 +163,21 @@ function Cadastro() {
         </>
       ) : (
         <div>
-          <select className='input-select' value={abrigoId} onChange={(e) => setAbrigoId(e.target.value)}>
-            <option value="">Selecione um abrigo</option>
-            {abrigos.map((abrigo) => (
-              <option key={abrigo.id} value={abrigo.id}>
-                {abrigo.nome}
-              </option>
-            ))}
-          </select>
-          {errors.abrigoId && <span className="error">{errors.abrigoId}</span>}
+          {loadingAbrigos ? (
+            <div className="spinner">Carregando abrigos...</div>
+          ) : (
+            <>
+              <select className='input-select' value={abrigoId} onChange={(e) => setAbrigoId(e.target.value)}>
+                <option value="">Selecione um abrigo</option>
+                {abrigos.map((abrigo) => (
+                  <option key={abrigo.id} value={abrigo.id}>
+                    {abrigo.nome}
+                  </option>
+                ))}
+              </select>
+              {errors.abrigoId && <span className="error">{errors.abrigoId}</span>}
+            </>
+          )}
         </div>
       )}
       <button className="signup-button" onClick={handleCadastro}>
