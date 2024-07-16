@@ -11,6 +11,7 @@
   box-shadow: 0 4px 8px rgba(5, 5, 5, 0.322);
   margin: 0 auto;
 }
+
 .spinner {
   font-size: 16px;
   color: #5e2a2a;
@@ -21,10 +22,12 @@ h2 {
   color: aliceblue;
   font-size: 24px;
 }
+
 .error {
   color: red; 
   font-size: 14px; 
 }
+
 .radio-group {
   display: flex;
   justify-content: center;
@@ -47,6 +50,11 @@ h2 {
   transform: scale(1.2);
 }
 
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
 button {
   margin: 0 10px;
   padding: 5px 20px;
@@ -59,8 +67,19 @@ button {
   background-color: #4CAF50; /* Verde padrão */
   color: #ffffff;
 }
+
 button:hover {
   opacity: 0.8;
+}
+
+.signup-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.back-button {
+  background-color: #ff6f61;
+  color: white;
 }
 
 .input-cadastro {
@@ -76,7 +95,6 @@ button:hover {
   margin-bottom: 10px;
 }
 
-
 .input-select {
   border-radius: 10px;
   height: 40px;
@@ -88,6 +106,7 @@ button:hover {
   color: #333;
   margin-bottom: 10px;
 }
+
 /* Estilos para o modal de confirmação */
 .modal {
   position: fixed;
@@ -118,7 +137,7 @@ button:hover {
 
 .modal-content p {
   margin-bottom: 10px;
-  color:cadetblue;
+  color: cadetblue;
 }
 
 .modal-content button {

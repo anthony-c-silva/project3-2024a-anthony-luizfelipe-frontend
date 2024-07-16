@@ -85,6 +85,10 @@ function Cadastro() {
     navigate('/login');
   };
 
+  const handleBackToLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <div className="cadastro-container">
       <h2>Cadastro</h2>
@@ -180,9 +184,14 @@ function Cadastro() {
           )}
         </div>
       )}
-      <button className="signup-button" onClick={handleCadastro}>
-        Cadastrar-se
-      </button>
+      <div className="button-group">
+        <button className="signup-button" onClick={handleCadastro}>
+          Cadastrar-se
+        </button>
+        <button className="back-button" onClick={handleBackToLogin}>
+          Voltar para o Login
+        </button>
+      </div>
       {serverError && <span className="error">{serverError}</span>}
       
       {showConfirmation && (
