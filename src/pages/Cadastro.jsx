@@ -11,6 +11,7 @@ function Cadastro() {
   const [abrigoEndereco, setAbrigoEndereco] = useState('');
   const [abrigoId, setAbrigoId] = useState('');
   const [isAdmin, setIsAdmin] = useState(true);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [abrigos, setAbrigos] = useState([]);
   const navigate = useNavigate();
 
@@ -43,7 +44,8 @@ function Cadastro() {
 
       try {
         await axios.post('https://project3-2024a-anthony-luizfelipe-backend.onrender.com/primeiro-admin', data);
-        navigate('/login');
+        setShowConfirmation(true);
+        // navigate('/login');
       } catch (error) {
         console.error('Erro ao cadastrar administrador:', error);
       }
@@ -57,13 +59,17 @@ function Cadastro() {
 
       try {
         await axios.post('https://project3-2024a-anthony-luizfelipe-backend.onrender.com/usuarios', data);
-        navigate('/login');
+        setShowConfirmation(true);
+        // navigate('/login');
       } catch (error) {
         console.error('Erro ao cadastrar usuário:', error);
       }
     }
   };
-
+  const handleModalClose = () => {
+    setShowConfirmation(false); // Fecha o modal de confirmação
+    navigate('/login'); // Navega para a página de login após fechar o modal
+  };
   return (
     <div className="cadastro-container">
       <h2>Cadastro</h2>
@@ -84,7 +90,7 @@ function Cadastro() {
             checked={!isAdmin}
             onChange={() => setIsAdmin(false)}
           />
-          Usuário
+          Voluntário
         </label>
       </div>
       <div>
@@ -108,7 +114,7 @@ function Cadastro() {
       <div>
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className='input-cadastro'
@@ -150,6 +156,17 @@ function Cadastro() {
       <button className="signup-button" onClick={handleCadastro}>
         Cadastrar-se
       </button>
+      
+       {/* Modal de Confirmação */}
+       {showConfirmation && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Cadastro realizado com sucesso!</h3>
+            <p>Seu cadastro foi concluído com sucesso.</p>
+            <button onClick={handleModalClose}>Fechar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
