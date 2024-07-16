@@ -78,9 +78,8 @@ button:hover {
     outline: none;
 }
 .error {
-    color: red; /* Define a cor vermelha para o texto */
-    font-size: 14px; /* Tamanho da fonte */
-    /* Outros estilos de formatação conforme necessário */
+    color: red; 
+    font-size: 14px;
 }
 /* Tabela de itens */
 .abrigos-table,

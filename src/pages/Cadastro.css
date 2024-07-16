@@ -16,7 +16,10 @@ h2 {
   color: aliceblue;
   font-size: 24px;
 }
-
+.error {
+  color: red; 
+  font-size: 14px; 
+}
 .radio-group {
   display: flex;
   justify-content: center;
