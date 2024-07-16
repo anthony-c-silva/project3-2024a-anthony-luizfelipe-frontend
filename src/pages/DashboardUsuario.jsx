@@ -24,7 +24,7 @@ function DashboardUsuario() {
     const navigate = useNavigate();
 
     const handleVisualizar = (id) => {
-        navigate(`/dashboard-abrigo/${id}`);
+        navigate(`/dashboard-adm/${id}`);
     };
 
     // Função assíncrona para mostrar abrigos com opção de filtro
