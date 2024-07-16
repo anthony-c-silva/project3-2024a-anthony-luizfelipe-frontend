@@ -214,7 +214,7 @@ function DashboardAbrigo() {
 
 return (
     <div className="dashboard-container">
-        <h2>Dashboard do Abrigo: {nomeAbrigo}</h2>
+        <h2>Abrigo {nomeAbrigo}</h2>
         <div className="button-group">
             <button onClick={() => openModal()}>Adicionar Item</button>
             <button onClick={() => setShowSearchModal(true)}>Buscar Item</button>
