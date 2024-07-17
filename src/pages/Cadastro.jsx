@@ -48,7 +48,7 @@ function Cadastro() {
     if (!password) formErrors.password = "Senha é obrigatória";
     if (!confirmPassword) formErrors.confirmPassword = "Repetir a senha é obrigatório";
     if (password && confirmPassword && password !== confirmPassword) formErrors.confirmPassword = "As senhas não correspondem";
-    if (password && !validatePasswordStrength(password)) formErrors.password = "A senha deve ter 8 caracteres ou mais, incluindo letras maiúsculas, minúsculas, números e caracteres especiais";
+    if (password && !validatePasswordStrength(password)) formErrors.password = "Senha deve ter 8 caracteres ou mais, incluindo letras maiúsculas, minúsculas, números e caracteres especiais";
     if (isAdmin) {
       if (!abrigoNome) formErrors.abrigoNome = "Nome do abrigo é obrigatório";
       if (!abrigoEndereco) formErrors.abrigoEndereco = "Endereço do abrigo é obrigatório";
@@ -121,46 +121,6 @@ function Cadastro() {
           Voluntário
         </label>
       </div>
-      <div>
-        <input
-          type="text"
-          placeholder="Nome"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className='input-cadastro'
-        />
-        {errors.username && <span className="error">{errors.username}</span>}
-      </div>
-      <div>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className='input-cadastro'
-        />
-        {errors.email && <span className="error">{errors.email}</span>}
-      </div>
-      <div>
-        <input
-          type="password"
-          placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className='input-cadastro'
-        />
-        {errors.password && <span className="error">{errors.password}</span>}
-      </div>
-      <div>
-        <input
-          type="password"
-          placeholder="Repetir Senha"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className='input-cadastro'
-        />
-        {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
-      </div>
       {isAdmin ? (
         <>
           <div>
@@ -203,6 +163,47 @@ function Cadastro() {
           )}
         </div>
       )}
+      <div>
+        <input
+          type="text"
+          placeholder="Seu Nome"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className='input-cadastro'
+        />
+        {errors.username && <span className="error">{errors.username}</span>}
+      </div>
+      <div>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className='input-cadastro'
+        />
+        {errors.email && <span className="error">{errors.email}</span>}
+      </div>
+      <div>
+        <input
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className='input-cadastro'
+        />
+        {errors.password && <span className="error">{errors.password}</span>}
+      </div>
+      <div>
+        <input
+          type="password"
+          placeholder="Repetir Senha"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          className='input-cadastro'
+        />
+        {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
+      </div>
+
       <div className="button-group">
         <button className="back-button" onClick={handleBackToLogin}>
           Voltar

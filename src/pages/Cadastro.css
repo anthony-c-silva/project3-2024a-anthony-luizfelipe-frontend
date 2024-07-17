@@ -25,8 +25,9 @@ h2 {
 
 .error {
   color: red; 
-  font-size: 14px; 
+  font-size: 12px; 
   padding-left: 5px;
+  text-justify: inherit;
 }
 
 .radio-group {
@@ -86,7 +87,7 @@ button:hover {
 .input-cadastro {
   border-radius: 10px;
   height: 40px;
-  width: 100%;
+  width: 18vw;
   padding: 0 10px;
   border: 1px solid #ccc;
   font-size: 16px;
