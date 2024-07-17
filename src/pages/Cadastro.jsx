@@ -7,6 +7,7 @@ function Cadastro() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [abrigoNome, setAbrigoNome] = useState('');
   const [abrigoEndereco, setAbrigoEndereco] = useState('');
   const [abrigoId, setAbrigoId] = useState('');
@@ -35,11 +36,19 @@ function Cadastro() {
     setLoadingAbrigos(false);
   };
 
+  const validatePasswordStrength = (password) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const validateForm = () => {
     let formErrors = {};
     if (!username) formErrors.username = "Nome é obrigatório";
     if (!email) formErrors.email = "Email é obrigatório";
     if (!password) formErrors.password = "Senha é obrigatória";
+    if (!confirmPassword) formErrors.confirmPassword = "Repetir a senha é obrigatório";
+    if (password && confirmPassword && password !== confirmPassword) formErrors.confirmPassword = "As senhas não correspondem";
+    if (password && !validatePasswordStrength(password)) formErrors.password = "A senha deve ter 8 caracteres ou mais, incluindo letras maiúsculas, minúsculas, números e caracteres especiais";
     if (isAdmin) {
       if (!abrigoNome) formErrors.abrigoNome = "Nome do abrigo é obrigatório";
       if (!abrigoEndereco) formErrors.abrigoEndereco = "Endereço do abrigo é obrigatório";
@@ -141,6 +150,16 @@ function Cadastro() {
           className='input-cadastro'
         />
         {errors.password && <span className="error">{errors.password}</span>}
+      </div>
+      <div>
+        <input
+          type="password"
+          placeholder="Repetir Senha"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          className='input-cadastro'
+        />
+        {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
       </div>
       {isAdmin ? (
         <>
