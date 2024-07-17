@@ -4,6 +4,8 @@ import {jwtDecode} from "jwt-decode";
 import Avatar from 'react-avatar';
 import './Navbar.css';
 import logo from '../assets/cuidar.svg';
+import hamburgerIcon from '../assets/hamburger.svg';
+import Sidebar from './Sidebar';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -17,9 +19,14 @@ const Navbar = () => {
   }
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
   };
 
   const handleLogout = () => {
@@ -30,6 +37,12 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
+        <img
+          src={hamburgerIcon}
+          alt="Menu"
+          className="hamburger-icon"
+          onClick={toggleSidebar}
+        />
         <img src={logo} alt="Logo" className="navbar-logo" />
       </div>
       <div className="navbar-right">
@@ -48,6 +61,7 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
+      <Sidebar toggleSidebar={toggleSidebar} isOpen={sidebarOpen} /> {/* Render Sidebar */}
     </nav>
   );
 };

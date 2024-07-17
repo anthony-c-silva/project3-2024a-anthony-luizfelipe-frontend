@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import {jwtDecode} from "jwt-decode";
 import Edit from '../assets/edit.svg';
 import Trash from '../assets/trash.svg';
 import Add from '../assets/add.svg';
@@ -27,6 +28,7 @@ function DashboardAbrigo() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [duplicateItem, setDuplicateItem] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false); // Modal de edição
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const categorias = [
         { value: 'alimentos', label: 'Alimentos' },
@@ -39,6 +41,15 @@ function DashboardAbrigo() {
         { value: 'moveis', label: 'Móveis' },
         { value: 'roupas', label: 'Roupas' }
     ];
+
+    // Função para obter e decodificar o token JWT
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            setIsAdmin(decodedToken.isAdmin);
+        }
+    }, []);
 
     async function getItens() {
         try {
@@ -211,50 +222,55 @@ function DashboardAbrigo() {
         setDeleteItem(null);
     }
 
-
-
-return (
-    <div className="dashboard-container">
-        <h2>Abrigo {nomeAbrigo}</h2>
-        <div className="button-group">
-            <button onClick={() => openModal()}>Adicionar Item</button>
-            <button onClick={() => setShowSearchModal(true)}>Buscar Item</button>
-            <button onClick={() => getItens()}>Mostrar Tudo</button>
-        </div>
-        <table className="itens-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Quantidade</th>
-                    <th>Categoria</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {itens.map(item => (
-                    <tr key={item.id}>
-                        <td>{item.id}</td>
-                        <td>{item.nome}</td>
-                        <td>{item.quantidade}</td>
-                        <td>{item.categoria}</td>
-                        <td>
-                            <button className="icon-button" onClick={() => openToAddModal(item)}>
-                                <img src={Add} alt="Adicionar" />
-                            </button>
-                            <button className="icon-button" onClick={() => openModal(item)}>
-                                <img src={Edit} alt="Editar" />
-                            </button>
-                            <button className="icon-button" onClick={() => openDeleteModal(item)}>
-                                <img src={Trash} alt="Deletar" />
-                            </button>
-                        </td>
+    return (
+        <div className="dashboard-container">
+            <h2>Abrigo {nomeAbrigo}</h2>
+            
+                <div className="button-group">
+                    {isAdmin && (
+                        <button onClick={() => openModal()}>Adicionar Item</button>
+                    )}
+            
+                    <button onClick={() => setShowSearchModal(true)}>Buscar Item</button>
+                    <button onClick={() => getItens()}>Mostrar Tudo</button>
+                </div>
+            <table className="itens-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Quantidade</th>
+                        <th>Categoria</th>
+                        <th>Ações</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
-
-        {showModal && (
+                </thead>
+                <tbody>
+                    {itens.map(item => (
+                        <tr key={item.id}>
+                            <td>{item.id}</td>
+                            <td>{item.nome}</td>
+                            <td>{item.quantidade}</td>
+                            <td>{item.categoria}</td>
+                            <td>
+                                <button className="icon-button" onClick={() => openToAddDonationModal(item)}>
+                                    <img src={Add} alt="Adicionar" />
+                                </button>
+                                {isAdmin && (
+                                    <>
+                                        <button className="icon-button" onClick={() => openModal(item)}>
+                                            <img src={Edit} alt="Editar" />
+                                        </button>
+                                        <button className="icon-button" onClick={() => openDeleteModal(item)}>
+                                            <img src={Trash} alt="Excluir" />
+                                        </button>
+                                    </>
+                                )}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {showModal && (
             <div className="modal">
                 <div className="modal-content">
                     <h3>{novoItem.id ? 'Editar Item' : 'Adicionar Item'}</h3>
