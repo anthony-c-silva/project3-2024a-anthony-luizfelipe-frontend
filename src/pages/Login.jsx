@@ -34,8 +34,6 @@ function Login() {
 
       const decodedToken = jwtDecode(token);
 
-      console.log("usuario:"+ decodedToken.abrigoId);
-
       const { abrigoId } = decodedToken;
      
       navigate(`/dashboard-adm/${abrigoId}`);
