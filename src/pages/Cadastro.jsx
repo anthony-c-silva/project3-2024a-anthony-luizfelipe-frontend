@@ -204,11 +204,11 @@ function Cadastro() {
         </div>
       )}
       <div className="button-group">
+        <button className="back-button" onClick={handleBackToLogin}>
+          Voltar
+        </button>
         <button className="signup-button" onClick={handleCadastro}>
           Cadastrar-se
-        </button>
-        <button className="back-button" onClick={handleBackToLogin}>
-          Voltar para o Login
         </button>
       </div>
       {serverError && <span className="error">{serverError}</span>}
