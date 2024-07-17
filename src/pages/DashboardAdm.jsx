@@ -4,6 +4,7 @@ import {jwtDecode} from "jwt-decode";
 import Edit from '../assets/edit.svg';
 import Trash from '../assets/trash.svg';
 import Add from '../assets/add.svg';
+import Remove from '../assets/remove.svg';
 import api from '../services/api';
 import './DashboardAdm.css';
 
@@ -41,6 +42,10 @@ function DashboardAbrigo() {
         { value: 'moveis', label: 'Móveis' },
         { value: 'roupas', label: 'Roupas' }
     ];
+    const [showIncrementModal, setShowIncrementModal] = useState(false); // Modal de incremento
+    const [itemToIncrement, setItemToIncrement] = useState({ id: null, nome: '', quantidade: 0 });
+    const [itemToDecrement, setItemToDecrement] = useState({ id: null, nome: '', quantidade: 0, quantidadeDecrement: 0, totalQuantidade: 0 });
+    const [showDecrementModal, setShowDecrementModal] = useState(false);
 
     // Função para obter e decodificar o token JWT
     useEffect(() => {
@@ -221,7 +226,67 @@ function DashboardAbrigo() {
         setShowDeleteModal(false);
         setDeleteItem(null);
     }
-
+    // Função para abrir o modal de incremento
+    function openIncrementModal(item) {
+        setItemToIncrement(item);
+        setShowIncrementModal(true);
+    }
+    function openDecrementModal(item) {
+        setItemToDecrement({ ...item, quantidadeDecrement: 0, totalQuantidade: item.quantidade });
+        setShowDecrementModal(true);
+    }
+    // Função para fechar o modal de incremento
+    function closeIncrementModal() {
+        setShowIncrementModal(false);
+        setItemToIncrement({ id: null, nome: '', quantidade: 0 });
+    }
+    function closeDecrementModal() {
+        setShowDecrementModal(false);
+        setItemToDecrement({ id: null, nome: '', quantidade: 0, quantidadeDecrement: 0, totalQuantidade: 0 });
+    }
+    
+    // Função para incrementar a quantidade do item
+    async function incrementItemQuantity() {
+        try {
+            await api.put(`/itens/${itemToIncrement.id}/incremento`, {
+                quantidade: Number(itemToIncrement.quantidade)
+            });
+            getItens();
+            closeIncrementModal();
+        } catch (error) {
+            console.error('Erro ao incrementar quantidade do item:', error);
+        }
+    }
+    async function decrementItemQuantity() {
+        try {
+            await api.put(`/itens/${itemToDecrement.id}/decremento`, {
+                quantidade: Number(itemToDecrement.quantidadeDecrement)
+            });
+            getItens();
+            closeDecrementModal();
+        } catch (error) {
+            console.error('Erro ao decrementar quantidade do item:', error);
+        }
+    }
+    
+    // Função para manipular a mudança na quantidade do item
+    function handleIncrementChange(event) {
+        const { value } = event.target;
+        setItemToIncrement({
+            ...itemToIncrement,
+            quantidade: value
+        });
+    }
+    function handleDecrementChange(event) {
+        const { value } = event.target;
+        setItemToDecrement(prevState => ({
+            ...prevState,
+            quantidadeDecrement: Number(value),
+            totalQuantidade: prevState.quantidade - Number(value)
+        }));
+    }
+    
+    
     return (
         <div className="dashboard-container">
             <h2>Abrigo {nomeAbrigo}</h2>
@@ -252,8 +317,11 @@ function DashboardAbrigo() {
                             <td>{item.quantidade}</td>
                             <td>{item.categoria}</td>
                             <td>
-                                <button className="icon-button" onClick={() => openToAddDonationModal(item)}>
+                                <button className="icon-button" onClick={() => openIncrementModal(item)}>
                                     <img src={Add} alt="Adicionar" />
+                                </button>
+                                <button className="icon-button" onClick={() => openDecrementModal(item)}>
+                                    <img src={Remove} alt="Decrementar" />
                                 </button>
                                 {isAdmin && (
                                     <>
@@ -359,6 +427,57 @@ function DashboardAbrigo() {
                         <div className="form-actions">
                             <button type="button" onClick={() => setShowSearchModal(false)}>Cancelar</button>
                             <button type="submit">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        )}
+        {showIncrementModal && (
+            <div className="modal">
+                <div className="modal-content">
+                    <h3>Incrementar Quantidade do Item</h3>
+                    <form onSubmit={(e) => { e.preventDefault(); incrementItemQuantity(); }}>
+                        <div className="form-group">
+                            <label htmlFor="quantidadeIncrement" className="label-abrigo">Quantidade a Adicionar: {itemToIncrement.quantidade}</label>
+                            <input 
+                                type="number" 
+                                id="quantidadeIncrement" 
+                                name="quantidadeIncrement" 
+                                className="input-abrigo"
+                                value={itemToIncrement.quantidade}
+                                onChange={handleIncrementChange}
+                            />
+                        </div>
+                        <div className="form-actions">
+                            <button type="button" onClick={closeIncrementModal}>Cancelar</button>
+                            <button type="submit">Incrementar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        )}
+        {showDecrementModal && (
+            <div className="modal">
+                <div className="modal-content">
+                    <h3>Decrementar Quantidade do Item</h3>
+                    <form onSubmit={(e) => { e.preventDefault(); decrementItemQuantity(); }}>
+                        <div className="form-group">
+                            <label htmlFor="quantidadeDecrement" className="label-abrigo">Quantidade Atual: {itemToDecrement.quantidade}</label>
+                            <input 
+                                type="number" 
+                                id="quantidadeDecrement" 
+                                name="quantidadeDecrement" 
+                                className="input-abrigo"
+                                value={itemToDecrement.quantidadeDecrement}
+                                onChange={handleDecrementChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="totalQuantidade" className="label-abrigo">Quantidade Restante: {itemToDecrement.totalQuantidade}</label>
+                        </div>
+                        <div className="form-actions">
+                            <button type="button" onClick={closeDecrementModal}>Cancelar</button>
+                            <button type="submit">Decrementar</button>
                         </div>
                     </form>
                 </div>

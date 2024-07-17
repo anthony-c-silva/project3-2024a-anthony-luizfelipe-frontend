@@ -159,7 +159,9 @@ button:hover {
     max-width: 500px;
     box-shadow: 0 4px 8px rgba(5, 5, 5, 0.322);
 }
-
+.modal-content p {
+    color:rgb(187, 21, 21);
+}
 .close {
     color: #080808;
     float: right;
@@ -186,6 +188,7 @@ form {
     color: #000000;
     font-size: 18px;
     margin-bottom: 5px;
+    padding-bottom: 5px;
     width: 100%; /* Largura total */
 }
 .text{
