@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Edit from '../assets/edit.svg';
 import Trash from '../assets/trash.svg';
+import Add from '../assets/add.svg';
 import api from '../services/api';
 import './DashboardAdm.css';
 
@@ -238,6 +239,9 @@ return (
                         <td>{item.quantidade}</td>
                         <td>{item.categoria}</td>
                         <td>
+                            <button className="icon-button" onClick={() => openToAddModal(item)}>
+                                <img src={Add} alt="Adicionar" />
+                            </button>
                             <button className="icon-button" onClick={() => openModal(item)}>
                                 <img src={Edit} alt="Editar" />
                             </button>

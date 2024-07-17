@@ -31,10 +31,6 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-left">
         <img src={logo} alt="Logo" className="navbar-logo" />
-        <ul className="navbar-links">
-          <li><Link to="/dashboard-usuario">Abrigos</Link></li>
-          <li><Link to={`/dashboard-adm/${abrigoId}`}>Itens</Link></li>
-        </ul>
       </div>
       <div className="navbar-right">
         <ul>
