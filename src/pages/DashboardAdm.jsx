@@ -211,7 +211,7 @@ function DashboardAbrigo() {
         setDeleteItem(null);
     }
 
-   // Parte do código do componente React, para mostrar como aplicar as classes
+
 
 return (
     <div className="dashboard-container">
