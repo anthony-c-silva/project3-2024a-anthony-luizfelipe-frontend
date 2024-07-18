@@ -11,6 +11,8 @@
     padding: 20px;
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.295);
+    min-height: calc(80vh - 80px);
+    
 }
 
 /* Título principal */

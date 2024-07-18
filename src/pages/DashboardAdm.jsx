@@ -342,8 +342,8 @@ function DashboardItens() {
                         </tr>
                     ))}
                 </tbody>
-                {loading && <Loading />}
             </table>
+            {loading && <Loading />}
             {showModal && (
             <div className="modal">
                 <div className="modal-content">
