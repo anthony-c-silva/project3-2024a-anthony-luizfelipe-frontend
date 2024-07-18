@@ -3,14 +3,17 @@ import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import Cuidar from '../assets/cuidar.svg';
 import api from '../services/api';
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import LoginImage from '../assets/mobile-login-cuate.png';
 import Loading from './Loading';
+import EyeIcon from '../assets/eye.svg'; // Ícone de olho aberto
+import EyeClosedIcon from '../assets/eye-crossed.svg'; // Ícone de olho fechado
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visualização da senha
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false); 
 
@@ -44,6 +47,10 @@ function Login() {
     }
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword); // Alterna a visualização da senha
+  };
+
   return (
     <div className="login-page">
       <div className="login-image-container">
@@ -62,12 +69,18 @@ function Login() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div>
+          <div className="password-container">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+            />
+            <img
+              src={showPassword ? EyeClosedIcon : EyeIcon}
+              alt={showPassword ? "Esconder senha" : "Mostrar senha"}
+              className="show-password-icon"
+              onClick={toggleShowPassword}
             />
           </div>
           <button className="login-button" onClick={handleLogin}>Entrar</button>

@@ -37,7 +37,7 @@
 }
 
 .login-container input {
-  width: 80%; /* Ajuste a largura conforme necessário */
+  /* width: 80%;  */
   border: px solid #ccc;
 }
 .titulo {
@@ -105,7 +105,23 @@ input:focus {
   font-size: 14px;
   margin-top: -10px;
 }
+.password-container {
+  position: relative;
+}
 
+.password-container input {
+  padding-right: 40px; /* Espaço para o ícone dentro do input */
+  
+}
+.show-password-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-70%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
 @media (min-width: 768px) {
   .login-page {
     flex-direction: row;
