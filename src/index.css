@@ -21,6 +21,7 @@
   margin: 0 auto;
   padding: 0; /* Removido o padding para evitar o deslocamento */
   min-height: 100vh;
+  max-height: 100vh;
 }
 
 body {

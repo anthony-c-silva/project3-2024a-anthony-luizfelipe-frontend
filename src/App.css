@@ -2,8 +2,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 .content-with-navbar {
   margin-top: 70px; 
+  margin-bottom: ;
 }

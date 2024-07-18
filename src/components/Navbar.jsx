@@ -55,13 +55,13 @@ const Navbar = () => {
             {dropdownOpen && (
               <div className="dropdown-menu">
                 <Link to="#" className="dropdown-item">Perfil</Link>
-                <Link to="/" className="dropdown-item" onClick={handleLogout}>Sair</Link>
+                <Link to="/login" className="dropdown-item" onClick={handleLogout}>Sair</Link>
               </div>
             )}
           </li>
         </ul>
       </div>
-      <Sidebar toggleSidebar={toggleSidebar} isOpen={sidebarOpen} /> {/* Render Sidebar */}
+      <Sidebar toggleSidebar={toggleSidebar} isOpen={sidebarOpen} /> 
     </nav>
   );
 };

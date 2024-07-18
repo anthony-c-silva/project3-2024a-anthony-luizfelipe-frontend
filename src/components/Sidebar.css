@@ -20,12 +20,19 @@
   flex-direction: column;
   padding: 1rem;
 }
-
+.abrigo-link{
+  margin-left: 1rem;
+}
+.user-isAdmin{
+  margin-left: 1rem;
+  color: white;
+  font-weight: bold;
+}
 .close-sidebar {
   background: none;
   border: none;
   color: white;
-  font-size: 2rem;
+  font-size: 1.2rem;
   align-self: flex-end;
   cursor: pointer;
   margin-bottom: 1rem;

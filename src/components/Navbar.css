@@ -13,10 +13,10 @@
 .hamburger-icon {
   height: 30px;
   cursor: pointer;
-  margin-right: 1rem; /* Add margin to the right of the hamburger icon */
+  margin-right: 3rem; 
 }
 
-/* Adjusting navbar left padding to accommodate hamburger icon */
+
 .navbar-left {
   padding-left: 20px;
 }
