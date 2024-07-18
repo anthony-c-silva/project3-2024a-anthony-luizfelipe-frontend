@@ -4,15 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import Cuidar from '../assets/cuidar.svg';
 import api from '../services/api';
 import { jwtDecode } from "jwt-decode";
-import LoginImage from '../assets/mobile-login-cuate.png'; // Adicione a imagem que deseja usar
-import Loading from './Loading'; // Importe o componente de Loading
+import LoginImage from '../assets/mobile-login-cuate.png';
+import Loading from './Loading';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false); // Estado para controlar a exibição do Loading
+  const [loading, setLoading] = useState(false); 
 
   const handleLogin = async () => {
     if (!email || !password) {

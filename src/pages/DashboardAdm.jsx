@@ -7,8 +7,9 @@ import Add from '../assets/add.svg';
 import Remove from '../assets/remove.svg';
 import api from '../services/api';
 import './DashboardAdm.css';
+import Loading from './Load';
 
-function DashboardAbrigo() {
+function DashboardItens() {
     const [nomeAbrigo, setNomeAbrigo] = useState('');
     const { id } = useParams();
     const [itens, setItens] = useState([]);
@@ -30,6 +31,7 @@ function DashboardAbrigo() {
     const [duplicateItem, setDuplicateItem] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false); // Modal de edição
     const [isAdmin, setIsAdmin] = useState(false);
+    const [loading, setLoading] = useState(false); 
 
     const categorias = [
         { value: 'alimentos', label: 'Alimentos' },
@@ -55,14 +57,17 @@ function DashboardAbrigo() {
             setIsAdmin(decodedToken.isAdmin);
         }
     }, []);
-
+   
     async function getItens() {
+        setLoading(true); // Ativa o Loading antes de fazer a requisição
         try {
             const response = await api.get('/itens');
             const itensFiltrados = response.data.itens.filter(item => item.abrigoId === parseInt(id));
             setItens(itensFiltrados);
         } catch (error) {
             console.error('Erro ao buscar itens:', error);
+        } finally {
+            setLoading(false); // Desativa o Loading após a requisição
         }
     }
 
@@ -337,6 +342,7 @@ function DashboardAbrigo() {
                         </tr>
                     ))}
                 </tbody>
+                {loading && <Loading />}
             </table>
             {showModal && (
             <div className="modal">
@@ -509,9 +515,10 @@ function DashboardAbrigo() {
                 </div>
             </div>
         )}
+   
     </div>
 );
 
 }
 
-export default DashboardAbrigo;
+export default DashboardItens;

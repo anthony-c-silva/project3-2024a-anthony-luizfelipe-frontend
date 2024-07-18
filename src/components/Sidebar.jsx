@@ -9,7 +9,6 @@ const Sidebar = ({ toggleSidebar, isOpen }) => {
   let isAdmin;
   if (token) {
   const decodedToken = jwtDecode(token);
-    console.log(decodedToken.isAdmin);
     isAdm = decodedToken.isAdmin;
     if(isAdm == true){
       isAdmin = "Administrador";
