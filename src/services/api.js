@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'https://project3-2024a-anthony-luizfelipe-backend.onrender.com'
+    // baseURL: 'https://project3-2024a-anthony-luizfelipe-backend.onrender.com'
+    baseURL: 'http://localhost:3333'
 })
 
 // Configuração global para incluir o token de autorização em todas as requisições
